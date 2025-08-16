@@ -47,7 +47,8 @@
             @forelse($promos as $promo)
             @php
                 $desc = $promo->description ?? '';
-                $title = $desc ? Str::upper(Str::limit($desc, 28, '')) : 'PROMO SPESIAL';
+                $autoTitle = $desc ? Str::upper(Str::limit($desc, 28, '')) : 'PROMO SPESIAL';
+                $title = $promo->title ?: $autoTitle;
             @endphp
             <div class="group relative bg-gradient-to-br from-gray-900/90 to-gray-800/80 border border-cyan-500/30 rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl promo-card">
                 <div class="relative">

@@ -17,6 +17,10 @@
             @csrf
             <div class="lg:col-span-2 space-y-4">
                 <div>
+                    <label class="block text-sm font-medium text-white mb-2">Judul Promo</label>
+                    <input type="text" name="title" maxlength="150" class="block w-full cyber-input" placeholder="Masukkan judul promo (opsional)">
+                </div>
+                <div>
                     <label class="block text-sm font-medium text-white mb-2">Gambar Promo</label>
                     <input type="file" name="image" accept="image/*" class="block w-full cyber-input @error('image') border-red-300 @enderror" required>
                     <p class="text-xs text-gray-500 mt-1">Format: JPG, PNG, GIF, WEBP (Max 5MB)</p>
@@ -54,13 +58,14 @@
             <div class="border border-cyan-500/30 rounded-lg overflow-hidden bg-gradient-to-br from-gray-900/90 to-gray-800/80">
                 <img src="{{ asset('storage/' . $promo->image_path) }}" class="w-full h-40 object-cover" alt="Promo">
                 <div class="p-4 space-y-3">
+                    <input type="text" form="promo-update-{{ $promo->id }}" name="title" value="{{ $promo->title }}" maxlength="150" class="block w-full cyber-input text-xs" placeholder="Judul promo">
                     <p class="text-sm text-gray-300 min-h-[48px]">{{ $promo->description }}</p>
                     <div class="flex items-center justify-between text-xs text-gray-400">
                         <span>Urutan: {{ $promo->sort_order }}</span>
                         <span>Status: <span class="{{ $promo->is_visible ? 'text-green-400' : 'text-red-400' }}">{{ $promo->is_visible ? 'Tampil' : 'Tersembunyi' }}</span></span>
                     </div>
                     <div class="flex items-center gap-2">
-                        <form action="{{ route('admin.promos.update', $promo) }}" method="POST" enctype="multipart/form-data" class="flex-1 space-y-2">
+                        <form id="promo-update-{{ $promo->id }}" action="{{ route('admin.promos.update', $promo) }}" method="POST" enctype="multipart/form-data" class="flex-1 space-y-2">
                             @csrf
                             @method('PUT')
                             <input type="file" name="image" accept="image/*" class="block w-full cyber-input text-xs">

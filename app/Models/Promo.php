@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Promo extends Model
 {
     protected $fillable = [
+        'title',
         'image_path',
         'description',
         'is_visible',
