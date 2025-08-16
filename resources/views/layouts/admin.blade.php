@@ -655,6 +655,11 @@
                         Manajemen Banner
                     </a>
                     
+                    <a href="{{ route('admin.promos.index') }}" class="sidebar-menu-item {{ request()->routeIs('admin.promos.*') ? 'active' : '' }}">
+                        <i class="fas fa-fire"></i>
+                        Kelola Promo
+                    </a>
+                    
                     <a href="{{ route('admin.settings.index') }}" class="sidebar-menu-item {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
                         <i class="fas fa-cog"></i>
                         Pengaturan Situs
