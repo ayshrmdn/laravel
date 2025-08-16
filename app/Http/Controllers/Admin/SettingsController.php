@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
+use App\Models\Promo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -19,7 +20,9 @@ class SettingsController extends Controller
             'gif_banner' => Setting::get('gif_banner', null),
         ];
 
-        return view('admin.settings.index', compact('settings'));
+        $promos = Promo::orderBy('sort_order')->latest('id')->paginate(6);
+
+        return view('admin.settings.index', compact('settings', 'promos'));
     }
 
     public function update(Request $request)
