@@ -198,7 +198,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Promo Quick Upload Section -->
         <div class="cyber-card">
             <div class="cyber-section-title mb-4">
@@ -357,7 +356,6 @@
                 </button>
             </div>
         </div>
-    </form>
 </div>
 
 @push('scripts')
