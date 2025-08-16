@@ -308,6 +308,7 @@
 @endsection
 
 @push('scripts')
+@verbatim
 <style>
     @keyframes smoothMarquee {
         0% { transform: translateX(100%); }
@@ -960,7 +961,7 @@
         }
     }
 </style>
-
+@endverbatim
 
 
 <script>
