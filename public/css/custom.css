@@ -1,0 +1,224 @@
+/* Custom CSS untuk menghindari konflik dengan Tailwind */
+.custom-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 1.5rem;
+}
+
+.custom-main {
+    display: flex;
+    max-width: 335px;
+    width: 100%;
+    flex-direction: column-reverse;
+}
+
+.custom-content {
+    flex: 1;
+    padding: 1.5rem;
+    padding-bottom: 3rem;
+    background-color: white;
+    box-shadow: inset 0px 0px 0px 1px rgba(26,26,0,0.16);
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+}
+
+.custom-header {
+    width: 100%;
+    max-width: 1024px;
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+}
+
+.custom-nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+.custom-link {
+    display: inline-block;
+    padding: 0.375rem 1.25rem;
+    border: 1px solid rgba(25, 20, 0, 0.21);
+    border-radius: 0.125rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    text-decoration: none;
+    transition: border-color 0.15s ease-in-out;
+}
+
+.custom-link:hover {
+    border-color: rgba(25, 21, 1, 0.29);
+}
+
+.custom-link-primary {
+    border-color: transparent;
+}
+
+.custom-link-primary:hover {
+    border-color: rgba(25, 20, 0, 0.21);
+}
+
+.custom-title {
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+}
+
+.custom-description {
+    margin-bottom: 0.5rem;
+    color: #706f6c;
+}
+
+.custom-list {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.custom-list-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem 0;
+    position: relative;
+}
+
+.custom-list-item::before {
+    content: '';
+    position: absolute;
+    left: 0.4rem;
+    top: 50%;
+    bottom: 0;
+    border-left: 1px solid #e3e3e0;
+}
+
+.custom-list-item:last-child::before {
+    top: 0;
+    bottom: 50%;
+}
+
+.custom-bullet {
+    position: relative;
+    padding: 0.25rem 0;
+    background-color: white;
+}
+
+.custom-bullet-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 0.875rem;
+    height: 0.875rem;
+    border-radius: 50%;
+    background-color: #FDFDFC;
+    box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.03), 0px 1px 2px 0px rgba(0,0,0,0.06);
+    border: 1px solid #e3e3e0;
+}
+
+.custom-bullet-dot {
+    width: 0.375rem;
+    height: 0.375rem;
+    border-radius: 50%;
+    background-color: #dbdbd7;
+}
+
+.custom-link-external {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    color: #f53003;
+    margin-left: 0.25rem;
+}
+
+.custom-actions {
+    display: flex;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+.custom-action-link {
+    color: #1b1b18;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+/* Dark mode styles */
+@media (prefers-color-scheme: dark) {
+    .custom-content {
+        background-color: #161615;
+        color: #EDEDEC;
+        box-shadow: inset 0px 0px 0px 1px #fffaed2d;
+    }
+    
+    .custom-link {
+        color: #EDEDEC;
+        border-color: #3E3E3A;
+    }
+    
+    .custom-link:hover {
+        border-color: #62605b;
+    }
+    
+    .custom-link-primary:hover {
+        border-color: #3E3E3A;
+    }
+    
+    .custom-description {
+        color: #A1A09A;
+    }
+    
+    .custom-list-item::before {
+        border-color: #3E3E3A;
+    }
+    
+    .custom-bullet {
+        background-color: #161615;
+    }
+    
+    .custom-bullet-inner {
+        background-color: #161615;
+        border-color: #3E3E3A;
+    }
+    
+    .custom-bullet-dot {
+        background-color: #3E3E3A;
+    }
+    
+    .custom-link-external {
+        color: #FF4433;
+    }
+    
+    .custom-action-link {
+        color: #EDEDEC;
+    }
+}
+
+/* Large screen styles */
+@media (min-width: 1024px) {
+    .custom-container {
+        padding: 2rem;
+    }
+    
+    .custom-main {
+        max-width: 1024px;
+        flex-direction: row;
+    }
+    
+    .custom-content {
+        padding: 5rem;
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
+        border-bottom-left-radius: 0;
+    }
+    
+    .custom-header {
+        margin-bottom: 0;
+    }
+} 
