@@ -146,10 +146,6 @@
             </div>
             
             <div class="p-6">
-            <div class="flex items-center justify-between mb-6">
-                <h3 class="text-white font-semibold">Kelola Promo</h3>
-                <a href="{{ route('admin.promos.index') }}" class="text-cyan-400 hover:text-cyan-300 text-sm"><i class="fas fa-external-link-alt mr-1"></i>Buka Halaman Kelola Promo</a>
-            </div>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <!-- Upload Section -->
                     <div class="space-y-4">
@@ -200,6 +196,51 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Promo Quick Upload Section -->
+        <div class="cyber-card">
+            <div class="cyber-section-title mb-4">
+                <i class="fas fa-fire mr-3"></i>
+                Promo Situs
+            </div>
+            <div class="p-6 space-y-6">
+                <div class="flex items-center justify-between">
+                    <p class="text-gray-300 text-sm">Kelola promo situs, upload gambar dan deskripsi singkat.</p>
+                    <a href="{{ route('admin.promos.index') }}" class="text-cyan-400 hover:text-cyan-300 text-sm"><i class="fas fa-external-link-alt mr-1"></i>Kelola Promo</a>
+                </div>
+                <form action="{{ route('admin.promos.store') }}" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    @csrf
+                    <div class="lg:col-span-2 space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-white mb-2">Gambar Promo</label>
+                            <input type="file" name="image" accept="image/*" class="block w-full cyber-input @error('image') border-red-300 @enderror" required>
+                            @error('image')<p class="text-sm text-red-500 mt-1">{{ $message }}</p>@enderror
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-white mb-2">Deskripsi Promo</label>
+                            <textarea name="description" rows="3" class="block w-full cyber-input" placeholder="Masukkan deskripsi singkat promo"></textarea>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-white mb-2">Urutan</label>
+                                <input type="number" name="sort_order" value="0" min="0" class="block w-full cyber-input">
+                            </div>
+                            <div class="flex items-center mt-6">
+                                <label class="inline-flex items-center">
+                                    <input type="checkbox" name="is_visible" value="1" checked class="form-checkbox text-cyan-500">
+                                    <span class="ml-2 text-white">Tampilkan</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-1 flex items-end">
+                        <button type="submit" class="w-full px-6 py-3 bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-medium rounded-lg hover:from-cyan-600 hover:to-purple-700">
+                            <i class="fas fa-upload mr-2"></i>Upload Promo
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
 
