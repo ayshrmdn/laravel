@@ -259,6 +259,9 @@
                 </button>
             </div>
         </div>
+    </form>
+
+    @include('admin.promos.quick-upload')
 </div>
 
 @push('scripts')
