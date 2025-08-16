@@ -45,12 +45,19 @@
         <!-- Promo Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             @forelse($promos as $promo)
-            <div class="group relative bg-gradient-to-br from-gray-900/90 to-gray-800/80 border border-cyan-500/30 rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+            @php
+                $desc = $promo->description ?? '';
+                $title = $desc ? Str::upper(Str::limit($desc, 28, '')) : 'PROMO SPESIAL';
+            @endphp
+            <div class="group relative bg-gradient-to-br from-gray-900/90 to-gray-800/80 border border-cyan-500/30 rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl promo-card">
                 <div class="relative">
-                    <img src="{{ asset('storage/' . $promo->image_path) }}" alt="Promo" class="w-full h-48 md:h-56 object-cover">
+                    <img src="{{ asset('storage/' . $promo->image_path) }}" alt="Promo" class="promo-image">
                 </div>
                 <div class="p-4">
-                    <p class="text-sm text-gray-300 leading-relaxed line-clamp-3" data-full-text="{{ $promo->description }}">{{ Str::limit($promo->description, 180) }}</p>
+                    <h3 class="promo-title">{{ $title }}</h3>
+                    <div class="promo-desc-box">
+                        <p class="promo-desc" data-full-text="{{ $promo->description }}">{{ Str::limit($promo->description, 180) }}</p>
+                    </div>
                     @if(strlen($promo->description) > 180)
                     <button class="mt-2 text-cyan-400 hover:text-pink-400 text-xs font-semibold read-more-btn" data-state="collapsed">
                         Selengkapnya
@@ -74,6 +81,42 @@
     .animate-smooth-marquee { animation: smoothMarquee 30s linear infinite; }
     @media (max-width: 640px) { .animate-smooth-marquee { animation: smoothMarquee 35s linear infinite; } }
     @keyframes gridMove { 0% { background-position: 0 0; } 100% { background-position: 50px 50px; } }
+
+    /* Full-width image on mobile (no crop) */
+    .promo-image { width: 100%; height: auto; object-fit: contain; max-height: 70vh; background: rgba(0,0,0,0.2); }
+    @media (min-width: 640px) { /* sm and up */
+        .promo-image { height: 14rem; object-fit: cover; }
+    }
+
+    /* Modern neon title */
+    .promo-title {
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        font-size: 1rem;
+        background: linear-gradient(90deg, #22D3EE, #C084FC, #FB7185, #22D3EE);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        animation: promoShimmer 4s linear infinite;
+        text-shadow: 0 0 18px rgba(34,211,238,.35);
+        margin-bottom: .5rem;
+    }
+    @keyframes promoShimmer { 0% { background-position: 200% 0; } 100% { background-position: 0 0; } }
+
+    /* Glassmorphism desc box */
+    .promo-desc-box {
+        background: linear-gradient(135deg, rgba(0,255,255,.06), rgba(139,0,255,.06));
+        border: 1px solid rgba(0,255,255,.25);
+        border-radius: 12px;
+        padding: 10px 12px;
+        backdrop-filter: blur(6px);
+    }
+    .promo-desc {
+        color: #D1D5DB; /* gray-300 */
+        font-size: .9rem;
+        line-height: 1.5;
+        text-shadow: 0 0 6px rgba(34,211,238,.15);
+    }
 </style>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -90,7 +133,7 @@
         // Read more/less toggle for promo descriptions
         document.querySelectorAll('.read-more-btn').forEach(function(btn){
             btn.addEventListener('click', function(){
-                const paragraph = this.previousElementSibling;
+                const paragraph = this.previousElementSibling.querySelector('.promo-desc');
                 const isCollapsed = this.getAttribute('data-state') === 'collapsed';
                 if (isCollapsed) {
                     paragraph.textContent = paragraph.getAttribute('data-full-text');
