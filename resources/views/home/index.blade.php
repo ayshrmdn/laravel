@@ -680,8 +680,8 @@
     }
 
     .cyber-stats-title {
-        animation: statsGlow 3s ease-in-out infinite alternate;
-        text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        animation: none;
+        text-shadow: none;
     }
 
     @keyframes statsGlow {
@@ -716,11 +716,11 @@
     .cyber-stat-container {
         position: relative;
         height: 100%;
-        background: linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, rgba(139, 0, 255, 0.1) 100%);
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.6) 100%);
         border: 2px solid rgba(0, 255, 255, 0.3);
         border-radius: 16px;
         padding: 20px;
-        backdrop-filter: blur(15px);
+        backdrop-filter: none;
         overflow: hidden;
         transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         display: flex;
@@ -750,7 +750,7 @@
         flex-shrink: 0;
         font-size: 20px;
         color: white;
-        animation: iconFloat 3s ease-in-out infinite;
+        animation: none;
         border: 2px solid rgba(255, 255, 255, 0.3);
     }
 
@@ -773,7 +773,7 @@
         font-size: 14px;
         letter-spacing: 1px;
         margin-bottom: 2px;
-        text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+        text-shadow: none;
     }
 
     .cyber-stat-sublabel {
@@ -782,8 +782,8 @@
         font-size: 12px;
         font-weight: 500;
         margin-bottom: 8px;
-        opacity: 0.9;
-        text-shadow: 0 0 4px rgba(168, 85, 247, 0.4);
+        opacity: 1;
+        text-shadow: none;
     }
 
     .cyber-stat-value {
@@ -799,11 +799,8 @@
         font-size: 28px;
         font-weight: bold;
         line-height: 1;
-        text-shadow: 
-            0 0 5px #FFD700,
-            0 0 10px #FFD700,
-            0 0 15px #FFD700;
-        animation: numberGlow 2s ease-in-out infinite alternate;
+        text-shadow: none;
+        animation: none;
     }
 
     .cyber-stat-unit {
