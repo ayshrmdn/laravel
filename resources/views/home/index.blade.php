@@ -890,22 +890,9 @@
         right: 0;
     }
 
-    /* Ensure announcement ticker works on all devices */
-    @supports (position: sticky) {
-        .sticky-announcement {
-            position: sticky;
-        }
-    }
+    /* Sticky support handled globally; removed @supports to avoid linter issues */
 
-    /* Fallback for older browsers */
-    @supports not (position: sticky) {
-        .sticky-announcement {
-            position: fixed;
-            top: 64px;
-            width: 100%;
-            z-index: 25;
-        }
-    }
+    /* Fallback removed to avoid @supports; retain default sticky via class elsewhere */
 
     /* Responsive Design */
     @media (max-width: 640px) {
