@@ -9,6 +9,7 @@
   font-family: 'Orbitron', 'Rajdhani', 'Montserrat', sans-serif;
   display: flex;
   flex-direction: column;
+  /* overflow: hidden; -- pastikan ini DIHAPUS agar scroll berjalan */
 }
 
 .chat-header {
@@ -33,6 +34,7 @@
 .chat-body {
   flex: 1;
   overflow-y: auto;
+  min-height: 0; /* BARIS PENTING AGAR SCROLL BERJALAN DI MOBILE */
   padding: 18px 12px;
   display: flex;
   flex-direction: column;
