@@ -117,6 +117,7 @@
         font-size: .9rem;
         line-height: 1.5;
         text-shadow: 0 0 6px rgba(34,211,238,.15);
+        white-space: pre-line; /* preserve newline formatting */
     }
 </style>
 <script>
