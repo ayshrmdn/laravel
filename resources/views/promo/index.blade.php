@@ -57,13 +57,11 @@
                 <div class="p-4">
                     <h3 class="promo-title">{{ $title }}</h3>
                     <div class="promo-desc-box">
-                        <p class="promo-desc" data-full-text="{{ $promo->description }}">{{ Str::limit($promo->description, 180) }}</p>
+                        <p class="promo-desc clamped" data-full-text="{{ $promo->description }}">{{ $promo->description }}</p>
                     </div>
-                    @if(strlen($promo->description) > 180)
-                    <button class="mt-2 text-cyan-400 hover:text-pink-400 text-xs font-semibold read-more-btn" data-state="collapsed">
+                    <button class="mt-2 text-cyan-400 hover:text-pink-400 text-xs font-semibold read-more-btn" data-state="collapsed" style="display:none;">
                         Selengkapnya
                     </button>
-                    @endif
                 </div>
             </div>
             @empty
@@ -118,6 +116,15 @@
         line-height: 1.5;
         text-shadow: 0 0 6px rgba(34,211,238,.15);
         white-space: pre-line; /* preserve newline formatting */
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .promo-desc.clamped {
+        -webkit-line-clamp: 2; /* show two lines */
+    }
+    .promo-desc.expanded {
+        display: block; /* auto height */
     }
 </style>
 <script>
@@ -132,19 +139,35 @@
             });
         }
 
+        // Auto show read-more if the description is clamped (exceeds two lines)
+        document.querySelectorAll('.promo-desc').forEach(function(p){
+            const btn = p.closest('.p-4').querySelector('.read-more-btn');
+            if (!btn) return;
+            // Measure if clamped: compare scrollHeight vs offsetHeight
+            requestAnimationFrame(() => {
+                const isOverflowing = p.scrollHeight > p.offsetHeight + 2; // allow small rounding
+                if (isOverflowing) {
+                    btn.style.display = 'inline-block';
+                }
+            });
+        });
+
         // Read more/less toggle for promo descriptions
         document.querySelectorAll('.read-more-btn').forEach(function(btn){
             btn.addEventListener('click', function(){
                 const paragraph = this.previousElementSibling.querySelector('.promo-desc');
                 const isCollapsed = this.getAttribute('data-state') === 'collapsed';
                 if (isCollapsed) {
+                    paragraph.classList.remove('clamped');
+                    paragraph.classList.add('expanded');
                     paragraph.textContent = paragraph.getAttribute('data-full-text');
                     this.textContent = 'Sembunyikan';
                     this.setAttribute('data-state', 'expanded');
                 } else {
+                    paragraph.classList.remove('expanded');
+                    paragraph.classList.add('clamped');
                     const full = paragraph.getAttribute('data-full-text') || '';
-                    const truncated = full.length > 180 ? (full.substring(0, 180) + '...') : full;
-                    paragraph.textContent = truncated;
+                    paragraph.textContent = full; // white-space: pre-line with clamp handles truncation visually
                     this.textContent = 'Selengkapnya';
                     this.setAttribute('data-state', 'collapsed');
                 }
