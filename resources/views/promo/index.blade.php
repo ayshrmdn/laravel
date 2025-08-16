@@ -48,22 +48,14 @@
             <div class="group relative bg-gradient-to-br from-gray-900/90 to-gray-800/80 border border-cyan-500/30 rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
                 <div class="relative">
                     <img src="{{ asset('storage/' . $promo->image_path) }}" alt="Promo" class="w-full h-48 md:h-56 object-cover">
-                    @auth('admin')
-                    <form action="{{ route('admin.promos.toggle-visibility', $promo) }}" method="POST" class="absolute top-3 right-3">
-                        @csrf
-                        @method('PATCH')
-                        <button type="submit" class="bg-black/40 text-white text-xs px-3 py-1 rounded-full border border-cyan-400/40 hover:bg-black/60 transition">
-                            <i class="fas fa-eye mr-1"></i>{{ $promo->is_visible ? 'Hide' : 'Show' }}
-                        </button>
-                    </form>
-                    @else
-                    <button onclick="alert('Hubungi admin untuk menyembunyikan/menampilkan promo ini')" class="absolute top-3 right-3 bg-black/40 text-white text-xs px-3 py-1 rounded-full border border-cyan-400/40 hover:bg-black/60 transition">
-                        <i class="fas fa-eye mr-1"></i>Hide/Show
-                    </button>
-                    @endauth
                 </div>
                 <div class="p-4">
-                    <p class="text-sm text-gray-300 leading-relaxed">{{ $promo->description }}</p>
+                    <p class="text-sm text-gray-300 leading-relaxed line-clamp-3" data-full-text="{{ $promo->description }}">{{ Str::limit($promo->description, 180) }}</p>
+                    @if(strlen($promo->description) > 180)
+                    <button class="mt-2 text-cyan-400 hover:text-pink-400 text-xs font-semibold read-more-btn" data-state="collapsed">
+                        Selengkapnya
+                    </button>
+                    @endif
                 </div>
             </div>
             @empty
@@ -94,6 +86,25 @@
                 setTimeout(() => { this.style.animationPlayState = 'running'; }, 100);
             });
         }
+
+        // Read more/less toggle for promo descriptions
+        document.querySelectorAll('.read-more-btn').forEach(function(btn){
+            btn.addEventListener('click', function(){
+                const paragraph = this.previousElementSibling;
+                const isCollapsed = this.getAttribute('data-state') === 'collapsed';
+                if (isCollapsed) {
+                    paragraph.textContent = paragraph.getAttribute('data-full-text');
+                    this.textContent = 'Sembunyikan';
+                    this.setAttribute('data-state', 'expanded');
+                } else {
+                    const full = paragraph.getAttribute('data-full-text') || '';
+                    const truncated = full.length > 180 ? (full.substring(0, 180) + '...') : full;
+                    paragraph.textContent = truncated;
+                    this.textContent = 'Selengkapnya';
+                    this.setAttribute('data-state', 'collapsed');
+                }
+            });
+        });
     });
 </script>
 @endpush
