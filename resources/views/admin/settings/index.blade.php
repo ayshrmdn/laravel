@@ -139,13 +139,17 @@
         </div>
 
         <!-- GIF Banner Management Section -->
-        <div class="cyber-card">
+                    <div class="cyber-card">
             <div class="cyber-section-title mb-4">
                 <i class="fas fa-film mr-3"></i>
                 GIF Banner Horizontal
             </div>
             
             <div class="p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-white font-semibold">Kelola Promo</h3>
+                <a href="{{ route('admin.promos.index') }}" class="text-cyan-400 hover:text-cyan-300 text-sm"><i class="fas fa-external-link-alt mr-1"></i>Buka Halaman Kelola Promo</a>
+            </div>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <!-- Upload Section -->
                     <div class="space-y-4">
