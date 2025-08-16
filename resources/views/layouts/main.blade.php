@@ -537,12 +537,16 @@
                     </div>
                 </a>
                 
-                <a href="#" class="nav-item">
+                <a href="{{ route('promo') }}" class="nav-item {{ request()->routeIs('promo') ? 'active' : '' }}">
                     <div class="relative flex flex-col items-center group">
                         <div class="w-12 h-12 rounded-full flex items-center justify-center transform transition-all duration-500 ease-out group-hover:scale-110">
-                            <i class="fas fa-fire-flame-curved text-2xl text-gray-400 group-hover:text-orange-400 transition-colors duration-300" style="filter: drop-shadow(0 0 8px currentColor);"></i>
+                            <i class="fas fa-fire-flame-curved text-2xl {{ request()->routeIs('promo') ? 'text-orange-400' : 'text-gray-400' }} group-hover:text-orange-400 transition-colors duration-300" style="filter: drop-shadow(0 0 8px currentColor);"></i>
                         </div>
+                        @if(request()->routeIs('promo'))
+                        <span class="nav-label mt-1 text-xs font-semibold text-orange-400">Promo</span>
+                        @else
                         <span class="nav-label mt-1 text-xs font-medium text-gray-400 opacity-0 group-hover:opacity-100 group-hover:text-orange-400 transition-all duration-300">Promo</span>
+                        @endif
                     </div>
                 </a>
                 

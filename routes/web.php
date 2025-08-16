@@ -3,9 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LiveChatController;
+use App\Http\Controllers\PromoController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/live-chat', [LiveChatController::class, 'index'])->name('live-chat');
+Route::get('/promo', [PromoController::class, 'index'])->name('promo');
 
 // Live Chat Routes
 Route::post('/live-chat/guest-start', [LiveChatController::class, 'startGuestChat'])->name('live-chat.guest-start');

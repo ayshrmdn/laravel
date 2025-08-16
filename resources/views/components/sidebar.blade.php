@@ -94,7 +94,7 @@
             </div>
         </a>
         
-        <a href="#" class="cyber-nav-item" data-nav="promo">
+        <a href="{{ route('promo') }}" class="cyber-nav-item {{ request()->routeIs('promo') ? 'active' : '' }}" data-nav="promo">
             <div class="cyber-nav-icon">
                 <i class="fas fa-fire"></i>
             </div>
@@ -202,7 +202,7 @@
             </div>
         </a>
         
-        <a href="#" class="cyber-nav-item" data-nav="promo">
+        <a href="{{ route('promo') }}" class="cyber-nav-item {{ request()->routeIs('promo') ? 'active' : '' }}" data-nav="promo">
             <div class="cyber-nav-icon">
                 <i class="fas fa-fire"></i>
             </div>

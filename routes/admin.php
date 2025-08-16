@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\GameController;
 use App\Http\Controllers\Admin\ProviderController;
+use App\Http\Controllers\Admin\PromoController as AdminPromoController;
 use App\Http\Controllers\Admin\CategoryController;
 use Illuminate\Support\Facades\Route;
 
@@ -57,5 +58,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Category Management Routes
         Route::resource('categories', CategoryController::class);
         Route::patch('/categories/{category}/toggle-status', [CategoryController::class, 'toggleStatus'])->name('categories.toggle-status');
+
+        // Promo Management Routes
+        Route::resource('promos', AdminPromoController::class)->except(['create', 'edit', 'show']);
+        Route::patch('/promos/{promo}/toggle-visibility', [AdminPromoController::class, 'toggleVisibility'])->name('promos.toggle-visibility');
     });
 });
