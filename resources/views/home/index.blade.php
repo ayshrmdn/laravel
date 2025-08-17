@@ -465,18 +465,21 @@
         position: relative;
         aspect-ratio: 16/10;
         overflow: hidden;
+        background: rgba(0,0,0,.2);
     }
 
     .cyber-game-image {
         width: 100%;
         height: 100%;
-        object-fit: cover;
-        transition: all 0.4s ease;
+        object-fit: contain;
+        object-position: center;
+        transition: all 0.3s ease;
+        background: transparent;
     }
 
     .cyber-game-card:hover .cyber-game-image {
-        transform: scale(1.1);
-        filter: brightness(1.2) saturate(1.3);
+        transform: scale(1.03);
+        filter: brightness(1.08) saturate(1.15);
     }
 
     .cyber-image-overlay {
