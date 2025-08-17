@@ -239,6 +239,15 @@
                         @enderror
                     </div>
                 </div>
+
+                <!-- Long site description -->
+                <div class="mt-6">
+                    <label for="site_long_description" class="block text-sm font-medium text-white mb-2">
+                        Deskripsi Panjang Situs (tampil di bawah Metode Pembayaran)
+                    </label>
+                    <textarea id="site_long_description" name="site_long_description" rows="6" class="block w-full px-4 py-3 cyber-input shadow-sm focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors">{{ old('site_long_description', $settings['site_long_description']) }}</textarea>
+                    <p class="mt-1 text-xs text-gray-400">Gunakan baris baru untuk pemformatan. Konten ini akan tampil di halaman utama.</p>
+                </div>
             </div>
         </div>
 

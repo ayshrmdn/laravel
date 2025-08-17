@@ -275,7 +275,21 @@
 </div>
 @endif
 
-<!-- Login Popup Modal -->
+<!-- Long Site Description -->
+@if(!empty($siteLongDescription))
+<div class="py-8">
+    <div class="max-w-6xl mx-auto px-4">
+        <div class="bg-gradient-to-br from-gray-900/80 to-gray-800/60 border border-cyan-400/20 rounded-2xl p-6">
+            <div class="text-center mb-4">
+                <h3 class="text-lg font-semibold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400">SLOT ONLINE TERPERCAYA</h3>
+            </div>
+            <div class="text-gray-200 leading-relaxed whitespace-pre-line text-sm md:text-base">{{ $siteLongDescription }}</div>
+        </div>
+    </div>
+</div>
+@endif
+ 
+ <!-- Login Popup Modal -->
 <div id="loginPopup" class="fixed inset-0 bg-black bg-opacity-80 items-center justify-center z-50 hidden" style="display: none;">
     <div class="bg-gray-900 rounded-2xl shadow-2xl border border-cyan-400/30 max-w-md w-full mx-4 transform transition-all duration-300">
         <!-- Header -->

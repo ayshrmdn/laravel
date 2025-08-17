@@ -19,6 +19,7 @@ class SettingsController extends Controller
             'site_description' => Setting::get('site_description', 'Situs Game Online Terpercaya'),
             'support_agent_image' => Setting::get('support_agent_image', null),
             'gif_banner' => Setting::get('gif_banner', null),
+            'site_long_description' => Setting::get('site_long_description', "MPOELOT adalah situs slot online terpercaya dengan koleksi game resmi RTP tinggi, transaksi cepat, dan layanan 24/7. Nikmati pengalaman bermain yang aman, adil, serta promosi menarik setiap hari. Dukung deposit via bank & e-wallet populer. Main dengan bijak dan raih jackpot!"),
         ];
 
         $promos = Promo::orderBy('sort_order')->latest('id')->paginate(6);
@@ -32,6 +33,7 @@ class SettingsController extends Controller
         $request->validate([
             'site_name' => 'nullable|string|max:255',
             'site_description' => 'nullable|string|max:500',
+            'site_long_description' => 'nullable|string|max:5000',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'support_agent_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'gif_banner' => 'nullable|mimes:gif|max:10240', // Max 10MB for GIF
@@ -45,6 +47,11 @@ class SettingsController extends Controller
         // Update site description
         if ($request->filled('site_description')) {
             Setting::set('site_description', $request->site_description);
+        }
+
+        // Update long site description (allow empty to clear)
+        if ($request->has('site_long_description')) {
+            Setting::set('site_long_description', $request->site_long_description);
         }
 
         // Update logo

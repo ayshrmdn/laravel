@@ -85,8 +85,11 @@ class HomeController extends Controller
         // Get GIF banner from settings
                 $gifBanner = Setting::get('gif_banner');
 
-        $paymentMethods = PaymentMethod::where('is_active', true)->orderBy('sort_order')->get();
+                $paymentMethods = PaymentMethod::where('is_active', true)->orderBy('sort_order')->get();
+
+        $siteLongDescription = Setting::get('site_long_description', "MPOELOT adalah situs slot online terpercaya dengan koleksi game resmi RTP tinggi, transaksi cepat, dan layanan 24/7. Nikmati pengalaman bermain yang aman, adil, serta promosi menarik setiap hari. Dukung deposit via bank & e-wallet populer. Main dengan bijak dan raih jackpot!");
  
-        return view('home.index', compact('popularGames', 'slots', 'banners', 'categories', 'gifBanner', 'paymentMethods'));
-}
+        return view('home.index', compact('popularGames', 'slots', 'banners', 'categories', 'gifBanner', 'paymentMethods', 'siteLongDescription'));
+ }
+
 }
