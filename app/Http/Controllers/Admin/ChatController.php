@@ -43,6 +43,7 @@ class ChatController extends Controller
                         'is_online' => false
                     ],
                     'created_at' => $message->created_at,
+                    'time_hm' => $message->created_at->format('H:i'),
                     'is_read' => $message->is_read,
                 ];
             });
@@ -113,6 +114,7 @@ class ChatController extends Controller
                     'is_online' => false
                 ],
                 'created_at' => $message->created_at,
+                'time_hm' => $message->created_at->format('H:i'),
                 'is_read' => false
             ];
 

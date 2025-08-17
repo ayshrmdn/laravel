@@ -636,7 +636,7 @@ function displayMessages(messages) {
     
     messagesArea.innerHTML = messages.map(message => {
         const isAdmin = message.admin_id !== null;
-        const time = new Date(message.created_at).toLocaleTimeString('id-ID', { 
+        const time = message.time_hm ?? new Date(message.created_at).toLocaleTimeString('id-ID', { 
             hour: '2-digit', 
             minute: '2-digit' 
         });
@@ -739,7 +739,7 @@ function sendMessage() {
 function addMessageToChat(message) {
     const messagesArea = document.getElementById('messagesArea');
     const isAdmin = message.admin_id !== null;
-    const time = new Date(message.created_at).toLocaleTimeString('id-ID', { 
+    const time = message.time_hm ?? new Date(message.created_at).toLocaleTimeString('id-ID', { 
         hour: '2-digit', 
         minute: '2-digit' 
     });
