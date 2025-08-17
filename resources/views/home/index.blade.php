@@ -100,21 +100,21 @@
 <!-- GIF Banner Horizontal with Jackpot -->
 @if($gifBanner)
 <div class="w-full bg-black relative">
-    <div class="relative overflow-hidden">
+    <div class="relative overflow-hidden jackpot-frame">
                  <img src="{{ asset('storage/' . $gifBanner) }}" 
               alt="GIF Banner" 
               class="w-full h-auto max-h-48 object-cover object-center gif-banner-img"
               style="animation: subtle-glow 3s ease-in-out infinite alternate;">
-
-        <!-- Jackpot Overlay -->
-        <div class="absolute inset-0 flex items-center justify-end pr-6">
-               <div class="flex items-center space-x-2">
-        <span class="text-yellow-400 text-xl md:text-xl font-bold">IDR</span>
-            <span id="jackpot-amount" class="jackpot-number text-yellow-300 text-2xl md:text-2xl font-mono font-black tracking-wider">
-                    1.250.000.000
-                </span>
-            </div>
-        </div>
+ 
+         <!-- Jackpot Overlay -->
+         <div class="absolute inset-0 flex items-center justify-end pr-6 jackpot-overlay">
+                <div class="flex items-center space-x-2">
+         <span class="jackpot-currency text-yellow-400 text-xl md:text-xl font-bold">IDR</span>
+             <span id="jackpot-amount" class="jackpot-number text-yellow-300 text-2xl md:text-2xl font-mono font-black tracking-wider">
+                     1.250.000.000
+                 </span>
+             </div>
+         </div>
     </div>
 </div>
 @endif
@@ -958,6 +958,15 @@
         .cyber-view-all-btn { border-width: 1.5px; }
         .cyber-stat-container { border-width: 1.5px; border-radius: 14px; }
         .sticky-announcement { border-radius: 0 0 12px 12px; }
+    }
+
+    /* Desktop: smaller jackpot banner and aligned digits */
+    @media (min-width: 1024px) {
+        .jackpot-frame { max-height: 140px; }
+        .gif-banner-img { max-height: 140px; object-position: center right; }
+        .jackpot-overlay { padding-right: 3rem; }
+        .jackpot-currency { font-size: 1rem; }
+        #jackpot-amount { font-size: 1.4rem; letter-spacing: .08em; }
     }
 </style>
 @endverbatim
