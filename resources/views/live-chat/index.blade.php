@@ -855,26 +855,28 @@ document.addEventListener('DOMContentLoaded', function() {
     guestEmailInput.addEventListener('input', debouncedSave);
     issueDescriptionInput.addEventListener('input', debouncedSave);
     
-    // Jika sudah login, mulai chat otomatis tanpa form
-    @if(auth()->check())
-    (async function() {
-        try {
-            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            const res = await fetch('{{ route('live-chat.auth-start') }}', { method: 'POST', headers: { 'X-CSRF-TOKEN': csrfToken, 'Accept': 'application/json' } });
-            const data = await res.json();
-            if (data.success) {
-                sessionId = data.chat_id;
-                preChatForm.classList.add('hidden');
-                chatInterface.classList.remove('hidden');
-                startMessagePolling();
-                messageInput.focus();
-            }
-        } catch (e) { console.error('Auto start chat failed', e); }
-    })();
-    @else
-    // Load data on page load
-    loadGuestData();
-    @endif
+    // Auto start chat for authenticated users (no Blade directives inside JS)
+    const isAuthenticated = document.body?.dataset?.authenticated === 'true';
+    const authStartUrl = "{{ route('live-chat.auth-start') }}";
+    if (isAuthenticated) {
+        (async function() {
+            try {
+                const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                const res = await fetch(authStartUrl, { method: 'POST', headers: { 'X-CSRF-TOKEN': csrfToken, 'Accept': 'application/json' } });
+                const data = await res.json();
+                if (data.success) {
+                    sessionId = data.chat_id;
+                    preChatForm.classList.add('hidden');
+                    chatInterface.classList.remove('hidden');
+                    startMessagePolling();
+                    messageInput.focus();
+                }
+            } catch (e) { console.error('Auto start chat failed', e); }
+        })();
+    } else {
+        // Load saved guest data on page load
+        loadGuestData();
+    }
     
     // Notification function
     function showNotification(message, type = 'info') {

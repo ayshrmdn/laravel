@@ -243,7 +243,7 @@
         </a>
         
         <!-- Cyber Logout -->
-        <form method="POST" action="#" class="mt-4">
+        <form method="POST" action="{{ route('auth.logout') }}" class="mt-4">
             @csrf
             <button type="submit" class="cyber-nav-item logout-item w-full text-left" data-nav="logout">
                 <div class="cyber-nav-icon">
