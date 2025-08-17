@@ -69,23 +69,44 @@
         </div>
     </div>
 
-    <!-- Popular Games (reuse) -->
-    <div class="max-w-6xl mx-auto px-4 mt-10">
-        <h3 class="text-xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 mb-4">Game Populer</h3>
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-            @forelse($popularGames as $game)
-                <div class="game-card border border-cyan-500/20 rounded-xl overflow-hidden bg-gradient-to-br from-gray-900/70 to-gray-800/50">
-                    <div class="aspect-[16/10] bg-black/30">
-                        <img src="{{ $game['image'] }}" alt="{{ $game['name'] }}" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-3">
-                        <div class="text-white text-sm font-semibold truncate">{{ $game['name'] }}</div>
-                        <div class="text-xs text-gray-400 mt-1">{{ $game['provider'] }}</div>
+    <!-- Game Populer Section (match home) -->
+    <div class="bg-gray-900 relative overflow-hidden mt-10">
+        <div class="absolute inset-0 opacity-30">
+            <div class="absolute inset-0" style="background-image: linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px); background-size: 50px 50px; animation: gridMove 20s linear infinite;"></div>
+            <div class="absolute top-10 left-10 w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
+            <div class="absolute top-20 right-16 w-1 h-1 bg-pink-400 rounded-full animate-pulse" style="animation-delay: 1s;"></div>
+            <div class="absolute bottom-16 left-1/3 w-1.5 h-1.5 bg-purple-400 rounded-full animate-pulse" style="animation-delay: 2s;"></div>
+        </div>
+        <div class="relative z-10 max-w-7xl mx-auto px-4 py-8">
+            <div class="text-center mb-8 flex items-center justify-center">
+                <div class="cyber-title-container relative inline-block">
+                    <h2 class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 mb-2 cyber-glow-text">GAME POPULER</h2>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                @foreach($popularGames as $game)
+                <div class="cyber-game-card group cursor-pointer" data-game-name="{{ $game['name'] }}">
+                    <div class="cyber-game-container">
+                        <div class="cyber-image-wrapper">
+                            <img src="{{ $game['image'] }}" alt="{{ $game['name'] }}" class="cyber-game-image">
+                            <div class="cyber-image-overlay">
+                                <div class="cyber-play-btn"><i class="fas fa-play"></i></div>
+                            </div>
+                            <div class="cyber-hot-badge"><span class="text-xs font-bold">HOT</span></div>
+                        </div>
+                        <div class="cyber-game-info">
+                            <h3 class="cyber-game-title">{{ $game['name'] }}</h3>
+                            <p class="cyber-game-provider">{{ $game['provider'] }}</p>
+                        </div>
+                        <div class="cyber-border-effect"></div>
+                        <div class="cyber-glow-effect"></div>
                     </div>
                 </div>
-            @empty
-                <div class="col-span-4 text-center text-gray-400">Belum ada game.</div>
-            @endforelse
+                @endforeach
+            </div>
+            <div class="text-center mt-8">
+                <button class="cyber-view-all-btn"><span class="cyber-btn-text">LIHAT SEMUA GAME</span><div class="cyber-btn-glow"></div><div class="cyber-btn-border"></div></button>
+            </div>
         </div>
     </div>
 
@@ -133,6 +154,31 @@
 @keyframes smoothMarquee { 0% { transform: translateX(100%);} 100% { transform: translateX(-100%);} }
 .animate-smooth-marquee { animation: smoothMarquee 30s linear infinite; }
 @media (max-width: 640px) { .animate-smooth-marquee { animation: smoothMarquee 35s linear infinite; } }
+/* Grid background */
+@keyframes gridMove { 0% { background-position: 0 0; } 100% { background-position: 50px 50%; } }
+
+/* Reuse cyber game styles from home */
+.cyber-game-card { position: relative; }
+.cyber-game-container { position: relative; background: linear-gradient(135deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); border: 1px solid rgba(0,255,255,.2); border-radius: 14px; overflow: hidden; transition: transform .25s ease, box-shadow .25s ease; }
+.cyber-game-container:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,.35); }
+.cyber-image-wrapper { position: relative; aspect-ratio: 1/1; background: #000; }
+.cyber-game-image { width: 100%; height: 100%; object-fit: cover; }
+.cyber-image-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(0,255,255,.15), rgba(255,0,128,.15)); opacity: 0; transition: opacity .25s ease; }
+.cyber-game-container:hover .cyber-image-overlay { opacity: 1; }
+.cyber-play-btn { width: 48px; height: 48px; border-radius: 9999px; background: linear-gradient(135deg, #22D3EE, #C084FC); display:flex; align-items:center; justify-content:center; color:#111; box-shadow: 0 0 20px rgba(34,211,238,.5); }
+.cyber-hot-badge { position: absolute; top: 8px; left: 8px; background: linear-gradient(135deg, #FB7185, #F59E0B); color: #111; border-radius: 9999px; padding: 2px 8px; font-weight: 700; box-shadow: 0 0 10px rgba(251,113,133,.45); }
+.cyber-game-info { padding: 10px 12px; }
+.cyber-game-title { color: #fff; font-weight: 800; letter-spacing: .02em; }
+.cyber-game-provider { font-size: .75rem; color: #94A3B8; }
+.cyber-border-effect { position: absolute; inset: 0; border-radius: 14px; pointer-events:none; box-shadow: inset 0 0 0 1px rgba(0,255,255,.15); }
+.cyber-glow-effect { position: absolute; inset: 0; pointer-events:none; background: radial-gradient(60% 40% at 50% 0%, rgba(34,211,238,.12), transparent 60%); }
+
+/* View All */
+.cyber-view-all-btn { position: relative; padding: .75rem 1.25rem; border: 1px solid rgba(34,211,238,.3); border-radius: 9999px; color: #fff; background: linear-gradient(135deg, rgba(34,211,238,.15), rgba(192,132,252,.15)); overflow: hidden; }
+.cyber-btn-text { position: relative; z-index:1; }
+.cyber-btn-glow { position:absolute; inset:0; background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent); transform: translateX(-100%); animation: scanMove 2.8s linear infinite; }
+.cyber-btn-border { position:absolute; inset:-1px; border-radius:9999px; box-shadow: inset 0 0 0 1px rgba(34,211,238,.35); pointer-events:none; }
+@keyframes scanMove { 0% { transform: translateX(-100%);} 100% { transform: translateX(100%);} }
 </style>
 @endverbatim
 @endpush
