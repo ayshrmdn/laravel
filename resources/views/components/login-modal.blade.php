@@ -702,11 +702,25 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         const formData = new FormData(this);
         const res = await fetch('{{ route('auth.login') }}', {
             method: 'POST',
-            headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') },
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
             body: formData
         });
-        const data = await res.json();
-        if (!res.ok || !data.success) throw new Error(data.message || 'Login gagal');
+        let data = null;
+        const ct = res.headers.get('content-type') || '';
+        if (ct.includes('application/json')) {
+            data = await res.json();
+        } else {
+            const text = await res.text();
+            throw new Error('Server mengembalikan respons tak terduga saat login.');
+        }
+        if (!res.ok || !data.success) {
+            const msg = data.message || (data.errors ? Object.values(data.errors).flat().join('\n') : 'Login gagal');
+            throw new Error(msg);
+        }
         window.location.href = data.redirect || '{{ route('dashboard') }}';
     } catch (err) {
         alert(err.message);
@@ -737,11 +751,25 @@ document.getElementById('registerForm').addEventListener('submit', async functio
         formData.append('password_confirmation', passConf);
         const res = await fetch('{{ route('auth.register') }}', {
             method: 'POST',
-            headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') },
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
             body: formData
         });
-        const data = await res.json();
-        if (!res.ok || !data.success) throw new Error(data.message || 'Registrasi gagal');
+        let data = null;
+        const ct = res.headers.get('content-type') || '';
+        if (ct.includes('application/json')) {
+            data = await res.json();
+        } else {
+            const text = await res.text();
+            throw new Error('Server mengembalikan respons tak terduga saat registrasi.');
+        }
+        if (!res.ok || !data.success) {
+            const msg = data.message || (data.errors ? Object.values(data.errors).flat().join('\n') : 'Registrasi gagal');
+            throw new Error(msg);
+        }
         window.location.href = data.redirect || '{{ route('dashboard') }}';
     } catch (err) {
         alert(err.message);
