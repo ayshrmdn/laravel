@@ -527,9 +527,9 @@
                 <a href="{{ auth()->check() ? route('dashboard') : route('home') }}" class="nav-item {{ (request()->routeIs('home') || request()->routeIs('dashboard')) ? 'active' : '' }}">
                     <div class="relative flex flex-col items-center group">
                         <div class="w-12 h-12 rounded-full flex items-center justify-center transform transition-all duration-500 ease-out group-hover:scale-110">
-                            <i class="fas fa-home text-2xl {{ request()->routeIs('home') ? 'text-cyan-400' : 'text-gray-400' }} group-hover:text-cyan-400 transition-colors duration-300" style="filter: drop-shadow(0 0 8px currentColor);"></i>
+                            <i class="fas fa-home text-2xl {{ (request()->routeIs('home') || request()->routeIs('dashboard')) ? 'text-cyan-400' : 'text-gray-400' }} group-hover:text-cyan-400 transition-colors duration-300" style="filter: drop-shadow(0 0 8px currentColor);"></i>
                         </div>
-                        @if(request()->routeIs('home'))
+                        @if(request()->routeIs('home') || request()->routeIs('dashboard'))
                         <span class="nav-label mt-1 text-xs font-semibold text-cyan-400">Home</span>
                         @else
                         <span class="nav-label mt-1 text-xs font-medium text-gray-400 opacity-0 group-hover:opacity-100 group-hover:text-cyan-400 transition-all duration-300">Home</span>
