@@ -63,8 +63,8 @@ class UserController extends Controller
         ]);
 
         $userData = $request->except(['password_confirmation']);
-        if (isset($userData['balance'])) {
-            $userData['balance'] = (float) $userData['balance'];
+        if ($request->filled('balance')) {
+            $userData['balance'] = (float) $request->input('balance');
         }
         $userData['password'] = Hash::make($request->password);
         
@@ -122,8 +122,8 @@ class UserController extends Controller
         ]);
 
         $userData = $request->except(['password', 'password_confirmation']);
-        if (isset($userData['balance'])) {
-            $userData['balance'] = (float) $userData['balance'];
+        if ($request->has('balance')) {
+            $userData['balance'] = (float) $request->input('balance', 0);
         }
         
         // Only update password if provided

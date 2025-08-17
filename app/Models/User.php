@@ -30,6 +30,7 @@ class User extends Authenticatable
         'referral_code',
         'referred_by',
         'is_active',
+        'balance',
         'is_online',
         'last_seen_at',
     ];
