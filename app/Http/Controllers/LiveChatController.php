@@ -10,7 +10,7 @@ use App\Models\Message;
 
 class LiveChatController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         return view('live-chat.index');
     }
@@ -27,11 +27,10 @@ class LiveChatController extends Controller
             // Check if there's already an active chat for this guest
             $existingChat = Chat::where('guest_email', $request->guest_email)
                 ->where('status', 'active')
-                ->where('created_at', '>=', now()->subHours(24)) // Only check chats from last 24 hours
+                ->where('created_at', '>=', now()->subHours(24))
                 ->first();
 
             if ($existingChat) {
-                // Return existing chat session
                 return response()->json([
                     'success' => true,
                     'chat_id' => $existingChat->id,
@@ -40,7 +39,6 @@ class LiveChatController extends Controller
                 ]);
             }
 
-            // Create new chat record
             $chat = Chat::create([
                 'user_id' => null,
                 'guest_name' => $request->guest_name,
@@ -49,7 +47,6 @@ class LiveChatController extends Controller
                 'last_message_at' => now()
             ]);
 
-            // Create initial message with issue description
             Message::create([
                 'chat_id' => $chat->id,
                 'sender_type' => 'guest',
@@ -59,7 +56,6 @@ class LiveChatController extends Controller
                 'is_read' => false
             ]);
 
-            // Store session data
             Session::put('guest_chat_session', [
                 'chat_id' => $chat->id,
                 'name' => $request->guest_name,
@@ -82,6 +78,44 @@ class LiveChatController extends Controller
         }
     }
 
+    public function startAuthChat(Request $request)
+    {
+        $user = $request->user();
+        if (!$user) {
+            return response()->json(['success' => false, 'error' => 'Unauthorized'], 401);
+        }
+
+        // Restore existing active chat for this user
+        $existing = Chat::where('user_id', $user->id)
+            ->where('status', 'active')
+            ->latest('last_message_at')
+            ->first();
+
+        if ($existing) {
+            return response()->json(['success' => true, 'chat_id' => $existing->id, 'restored' => true]);
+        }
+
+        // Create new chat for authenticated user
+        $chat = Chat::create([
+            'user_id' => $user->id,
+            'guest_name' => $user->full_name ?? $user->username,
+            'guest_email' => $user->email,
+            'status' => 'active',
+            'last_message_at' => now(),
+        ]);
+
+        Message::create([
+            'chat_id' => $chat->id,
+            'sender_type' => 'guest',
+            'sender_id' => $user->id,
+            'message' => 'Memulai chat sebagai pengguna terautentikasi',
+            'type' => 'text',
+            'is_read' => false,
+        ]);
+
+        return response()->json(['success' => true, 'chat_id' => $chat->id]);
+    }
+
     public function sendMessage(Request $request)
     {
         try {
@@ -90,16 +124,12 @@ class LiveChatController extends Controller
                 'session_id' => 'required',
             ]);
 
-            // Get chat ID
             $chatId = $request->session_id;
-            
-            // Find chat
             $chat = Chat::find($chatId);
             if (!$chat) {
                 return response()->json(['error' => 'Chat tidak ditemukan'], 404);
             }
 
-            // Create message
             $message = Message::create([
                 'chat_id' => $chat->id,
                 'sender_type' => 'guest',
@@ -109,7 +139,6 @@ class LiveChatController extends Controller
                 'is_read' => false
             ]);
 
-            // Update chat timestamp
             $chat->update([
                 'last_message_at' => now(),
                 'status' => 'active'
@@ -140,13 +169,11 @@ class LiveChatController extends Controller
     public function getMessages($sessionId)
     {
         try {
-            // Find chat
             $chat = Chat::find($sessionId);
             if (!$chat) {
                 return response()->json(['error' => 'Chat tidak ditemukan'], 404);
             }
 
-            // Get messages
             $messages = Message::where('chat_id', $chat->id)
                 ->orderBy('created_at', 'asc')
                 ->get()
