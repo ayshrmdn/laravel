@@ -463,15 +463,15 @@
     /* Image Wrapper */
     .cyber-image-wrapper {
         position: relative;
-        aspect-ratio: 16/10;
+        aspect-ratio: 1/1;
         overflow: hidden;
-        background: rgba(0,0,0,.2);
+        background: transparent;
     }
 
     .cyber-game-image {
         width: 100%;
         height: 100%;
-        object-fit: contain;
+        object-fit: cover;
         object-position: center;
         transition: all 0.3s ease;
         background: transparent;
