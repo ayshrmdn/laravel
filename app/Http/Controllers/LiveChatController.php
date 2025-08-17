@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
 use App\Models\Chat;
 use App\Models\Message;
+use App\Jobs\SendAdminMessage;
 
 class LiveChatController extends Controller
 {
@@ -56,15 +57,11 @@ class LiveChatController extends Controller
                 'is_read' => false
             ]);
 
-            // Auto-greeting for guest after starting chat
-            Message::create([
-                'chat_id' => $chat->id,
-                'sender_type' => 'admin',
-                'sender_id' => null,
-                'message' => 'Selamat datang ' . $request->guest_name . ', ada yang bisa dibantu?',
-                'type' => 'text',
-                'is_read' => false
-            ]);
+            // Auto-greeting for guest after starting chat (delayed 3-5s)
+            $delaySeconds = rand(3, 5);
+            $greetText = 'Selamat datang ' . $request->guest_name . ', ada yang bisa dibantu?';
+            SendAdminMessage::dispatch($chat->id, $greetText)->delay(now()->addSeconds($delaySeconds));
+
             $chat->update(['last_message_at' => now()]);
 
             Session::put('guest_chat_session', [
@@ -147,19 +144,12 @@ class LiveChatController extends Controller
                 'status' => 'active'
             ]);
 
-            // Auto-greet on first user message if chat has only 1 message
+            // Auto-greet on first user message if chat has only 1 message (delayed 3-5s)
             if (Message::where('chat_id', $chat->id)->count() === 1) {
                 $adminName = \App\Models\Setting::get('support_admin_name', 'Admin Dukungan');
                 $greetText = 'Selamat datang ' . ($chat->guest_name ?: 'pengguna') . ', ada yang bisa dibantu?';
-                Message::create([
-                    'chat_id' => $chat->id,
-                    'sender_type' => 'admin',
-                    'sender_id' => null, // could be filled with admin id in future
-                    'message' => $greetText,
-                    'type' => 'text',
-                    'is_read' => false
-                ]);
-                $chat->update(['last_message_at' => now()]);
+                $delaySeconds = rand(3, 5);
+                SendAdminMessage::dispatch($chat->id, $greetText)->delay(now()->addSeconds($delaySeconds));
             }
 
             return response()->json([
