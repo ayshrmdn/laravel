@@ -700,6 +700,8 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     
     try {
         const formData = new FormData(this);
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        if (!formData.has('_token')) formData.append('_token', csrfToken);
         const res = await fetch('{{ route('auth.login') }}', {
             method: 'POST',
             headers: {
@@ -745,6 +747,8 @@ document.getElementById('registerForm').addEventListener('submit', async functio
     
     try {
         const formData = new FormData(this);
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        if (!formData.has('_token')) formData.append('_token', csrfToken);
         // map password confirmation to expected field name
         const pass = this.querySelector('input[name="password"]').value;
         const passConf = this.querySelector('input[name="password_confirmation"]').value;
