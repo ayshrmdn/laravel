@@ -77,7 +77,7 @@
     <div class="max-w-7xl mx-auto px-4">
         <!-- Horizontal Categories Slider -->
         <div class="relative">
-            <div class="flex overflow-x-auto scrollbar-hide space-x-4 pb-2" id="categoriesSlider">
+            <div class="flex overflow-x-auto scrollbar-hide space-x-4 pb-2 justify-center" id="categoriesSlider">
                 @foreach($categories as $category)
                     <div class="flex-shrink-0 group cursor-pointer" onclick="handleCategoryClick('{{ $category->name }}')">
                         <div class="flex flex-col items-center justify-center w-16 h-16 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors duration-200 group-hover:scale-105">
@@ -132,7 +132,7 @@
 
     <div class="relative z-10 max-w-7xl mx-auto px-4 py-8">
         <!-- Section Header -->
-        <div class="text-center mb-8">
+        <div class="text-center mb-8 flex items-center justify-center">
             <div class="cyber-title-container relative inline-block">
                 <h2 class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 mb-2 cyber-glow-text">
                     GAME POPULER
