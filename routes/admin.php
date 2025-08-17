@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\GameController;
 use App\Http\Controllers\Admin\ProviderController;
+use App\Http\Controllers\Admin\PaymentMethodController;
 use App\Http\Controllers\Admin\PromoController as AdminPromoController;
 use App\Http\Controllers\Admin\CategoryController;
 use Illuminate\Support\Facades\Route;
@@ -55,12 +56,19 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('providers', ProviderController::class);
         Route::patch('/providers/{provider}/toggle-status', [ProviderController::class, 'toggleStatus'])->name('providers.toggle-status');
         
-        // Category Management Routes
+                // Category Management Routes
         Route::resource('categories', CategoryController::class);
         Route::patch('/categories/{category}/toggle-status', [CategoryController::class, 'toggleStatus'])->name('categories.toggle-status');
-
+ 
         // Promo Management Routes
         Route::resource('promos', AdminPromoController::class)->except(['create', 'edit', 'show']);
         Route::patch('/promos/{promo}/toggle-visibility', [AdminPromoController::class, 'toggleVisibility'])->name('promos.toggle-visibility');
-    });
+
+        // Payment Methods
+        Route::get('/payment-methods', [PaymentMethodController::class, 'index'])->name('payment-methods.index');
+        Route::post('/payment-methods', [PaymentMethodController::class, 'store'])->name('payment-methods.store');
+        Route::put('/payment-methods/{paymentMethod}', [PaymentMethodController::class, 'update'])->name('payment-methods.update');
+        Route::delete('/payment-methods/{paymentMethod}', [PaymentMethodController::class, 'destroy'])->name('payment-methods.destroy');
+        Route::patch('/payment-methods/{paymentMethod}/toggle', [PaymentMethodController::class, 'toggle'])->name('payment-methods.toggle');
+});
 });

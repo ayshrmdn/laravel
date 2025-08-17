@@ -261,6 +261,22 @@
     </div>
 </div>
 
+<!-- Payment Methods -->
+@if(isset($paymentMethods) && $paymentMethods->count())
+<div class="bg-black py-6">
+    <div class="max-w-6xl mx-auto px-4">
+        <div class="text-center mb-4">
+            <h3 class="text-lg font-semibold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400">METODE PEMBAYARAN</h3>
+        </div>
+        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 items-center justify-items-center">
+            @foreach($paymentMethods as $method)
+                <img src="{{ asset('storage/' . $method->icon_path) }}" alt="{{ $method->name }}" class="h-10 sm:h-12 md:h-14 object-contain opacity-90 hover:opacity-100 transition" />
+            @endforeach
+        </div>
+    </div>
+</div>
+@endif
+
 <!-- Login Popup Modal -->
 <div id="loginPopup" class="fixed inset-0 bg-black bg-opacity-80 items-center justify-center z-50 hidden" style="display: none;">
     <div class="bg-gray-900 rounded-2xl shadow-2xl border border-cyan-400/30 max-w-md w-full mx-4 transform transition-all duration-300">

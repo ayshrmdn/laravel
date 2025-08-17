@@ -8,6 +8,7 @@ use App\Models\Banner;
 use App\Models\Category;
 use App\Models\Game;
 use App\Models\Setting;
+use App\Models\PaymentMethod;
 
 class HomeController extends Controller
 {
@@ -82,8 +83,10 @@ class HomeController extends Controller
                              ->get();
 
         // Get GIF banner from settings
-        $gifBanner = Setting::get('gif_banner');
+                $gifBanner = Setting::get('gif_banner');
 
-        return view('home.index', compact('popularGames', 'slots', 'banners', 'categories', 'gifBanner'));
-    }
+        $paymentMethods = PaymentMethod::where('is_active', true)->orderBy('sort_order')->get();
+ 
+        return view('home.index', compact('popularGames', 'slots', 'banners', 'categories', 'gifBanner', 'paymentMethods'));
+}
 }
