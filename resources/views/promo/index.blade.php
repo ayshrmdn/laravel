@@ -3,11 +3,12 @@
 @section('title', 'Promo Terbaru - ' . \App\Models\Setting::get('site_name', 'MPOELOT'))
 
 @section('content')
-<!-- Sticky Announcement (cyberpunk animated background) -->
-<div class="text-white shadow-lg overflow-hidden sticky-announcement promo-announce">
-    <div class="promo-announce-bg"></div>
-    <div class="promo-announce-particles">
-        <span></span><span></span><span></span>
+<!-- Sticky Announcement (revert to simple gradient) -->
+<div class="text-white shadow-lg overflow-hidden sticky-announcement" style="background: linear-gradient(90deg, #00FFFF 0%, #FF0080 25%, #8B00FF 50%, #FF0040 75%, #00FFFF 100%);">
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-1 left-8 w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div>
+        <div class="absolute top-2 right-16 w-1 h-1 bg-white rounded-full animate-pulse" style="animation-delay: 0.5s;"></div>
+        <div class="absolute bottom-1 left-1/3 w-1.5 h-1.5 bg-white rounded-full animate-pulse" style="animation-delay: 1s;"></div>
     </div>
     <div class="relative py-0.5">
         <div class="flex items-center min-h-6">
@@ -78,30 +79,6 @@
 
 @push('scripts')
 <style>
-    /* Announcement cyberpunk background */
-    .promo-announce { position: sticky; top: 64px; z-index:25; }
-    .promo-announce-bg {
-        position:absolute; inset:0; pointer-events:none; z-index:0;
-        background: linear-gradient(90deg, #00FFFF 0%, #FF0080 50%, #8B00FF 100%);
-        background-size: 200% 100%;
-        animation: announceGradient 8s linear infinite;
-        opacity:.9;
-    }
-    .promo-announce::after {
-        content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
-        background: repeating-linear-gradient(0deg, rgba(255,255,255,.08) 0px, rgba(255,255,255,.08) 1px, transparent 2px, transparent 3px);
-        mix-blend-mode: overlay; opacity:.15; animation: scanBand 5s linear infinite;
-    }
-    .promo-announce-particles { position:absolute; inset:0; z-index:0; pointer-events:none; }
-    .promo-announce-particles span { position:absolute; width:6px; height:6px; border-radius:50%; background:#fff; opacity:.6; box-shadow:0 0 10px #00FFFF, 0 0 18px #FF0080; }
-    .promo-announce-particles span:nth-child(1){ top:10%; left:5%; animation:floater 6s ease-in-out infinite; }
-    .promo-announce-particles span:nth-child(2){ top:50%; left:80%; animation:floater 7s ease-in-out infinite 1s; }
-    .promo-announce-particles span:nth-child(3){ top:30%; left:40%; animation:floater 8s ease-in-out infinite .5s; }
-
-    @keyframes floater { 0%,100% { transform: translateY(-4px) translateX(0);} 50% { transform: translateY(4px) translateX(6px);} }
-    @keyframes announceGradient { 0%{ background-position:200% 0;} 100%{ background-position:0 0;} }
-    @keyframes scanBand { 0%{ background-position:0 -200%; } 100%{ background-position:0 200%; } }
-
     @keyframes smoothMarquee { 0% { transform: translateX(100%);} 100% { transform: translateX(-100%);} }
     .animate-smooth-marquee { animation: smoothMarquee 30s linear infinite; }
     @media (max-width: 640px) { .animate-smooth-marquee { animation: smoothMarquee 35s linear infinite; } }
