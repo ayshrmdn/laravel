@@ -130,6 +130,19 @@
                 </div>
             </div>
 
+            <!-- Balance -->
+            <div class="cyber-card">
+                <h2 class="text-xl font-bold text-emerald-400 mb-6">
+                    <i class="fas fa-wallet mr-2"></i>Saldo Awal (Opsional)
+                </h2>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div>
+                        <label class="cyber-label">Saldo (Rp)</label>
+                        <input type="number" step="0.01" min="0" name="balance" value="{{ old('balance', 0) }}" class="cyber-input" placeholder="0">
+                    </div>
+                </div>
+            </div>
+
             <!-- Form Actions -->
             <div class="cyber-card">
                 <div class="flex justify-between items-center">

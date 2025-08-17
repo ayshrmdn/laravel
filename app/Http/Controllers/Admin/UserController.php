@@ -59,9 +59,13 @@ class UserController extends Controller
             'phone' => 'nullable|string|max:20',
             'is_active' => 'boolean',
             'email_verified' => 'boolean',
+            'balance' => 'nullable|numeric|min:0|max:100000000000',
         ]);
 
         $userData = $request->except(['password_confirmation']);
+        if (isset($userData['balance'])) {
+            $userData['balance'] = (float) $userData['balance'];
+        }
         $userData['password'] = Hash::make($request->password);
         
         // Set default values for missing fields
@@ -114,9 +118,13 @@ class UserController extends Controller
             'account_number' => 'nullable|string|max:255',
             'referred_by' => 'nullable|string|exists:users,referral_code',
             'is_active' => 'boolean',
+            'balance' => 'nullable|numeric|min:0|max:100000000000',
         ]);
 
         $userData = $request->except(['password', 'password_confirmation']);
+        if (isset($userData['balance'])) {
+            $userData['balance'] = (float) $userData['balance'];
+        }
         
         // Only update password if provided
         if ($request->filled('password')) {

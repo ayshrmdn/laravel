@@ -56,6 +56,7 @@ class User extends Authenticatable
             'password' => 'hashed',
             'is_active' => 'boolean',
             'is_online' => 'boolean',
+            'balance' => 'decimal:2',
             'last_seen_at' => 'datetime',
         ];
     }

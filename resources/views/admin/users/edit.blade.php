@@ -119,6 +119,20 @@
                 </div>
             </div>
 
+            <!-- Balance Section -->
+            <div class="mt-8 pt-6 border-t border-gray-700">
+                <h4 class="text-xl font-bold text-emerald-400 mb-6 flex items-center">
+                    <i class="fas fa-wallet mr-3"></i>Saldo Pengguna
+                </h4>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div>
+                        <label for="balance" class="cyber-label">Saldo (Rp)</label>
+                        <input type="number" step="0.01" min="0" id="balance" name="balance" value="{{ old('balance', $user->balance ?? 0) }}" class="cyber-input">
+                        <p class="text-xs text-gray-400 mt-1">Masukkan nominal tanpa titik/koma. Gunakan desimal jika perlu.</p>
+                    </div>
+                </div>
+            </div>
+
             <!-- Bank Information Section -->
             <div class="mt-8 pt-6 border-t border-gray-700">
                 <h4 class="text-xl font-bold text-purple-400 mb-6 flex items-center">
