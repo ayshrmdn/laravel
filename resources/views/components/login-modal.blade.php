@@ -723,7 +723,10 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
             const msg = data.message || (data.errors ? Object.values(data.errors).flat().join('\n') : 'Login gagal');
             throw new Error(msg);
         }
-        window.location.href = data.redirect || '{{ route('dashboard') }}';
+        if (window.showToast && data.toast) {
+            window.showToast(data.toast);
+        }
+        setTimeout(() => { window.location.href = data.redirect || '{{ route('dashboard') }}'; }, 300);
     } catch (err) {
         alert(err.message);
         btn.innerHTML = '<span class="relative z-10"><i class="fas fa-sign-in-alt mr-2"></i>Masuk Portal</span>';
@@ -774,7 +777,10 @@ document.getElementById('registerForm').addEventListener('submit', async functio
             const msg = data.message || (data.errors ? Object.values(data.errors).flat().join('\n') : 'Registrasi gagal');
             throw new Error(msg);
         }
-        window.location.href = data.redirect || '{{ route('dashboard') }}';
+        if (window.showToast && data.toast) {
+            window.showToast(data.toast);
+        }
+        setTimeout(() => { window.location.href = data.redirect || '{{ route('dashboard') }}'; }, 350);
     } catch (err) {
         alert(err.message);
         btn.innerHTML = '<span class="relative z-10"><i class="fas fa-user-plus mr-2"></i>Daftar Portal</span>';

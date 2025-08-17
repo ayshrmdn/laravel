@@ -430,9 +430,52 @@
             z-index: 1;
             pointer-events: none;
         }
+        
+        /* Cyber Toast */
+        .cyber-toast {
+            position: relative;
+            min-width: 260px;
+            max-width: 360px;
+            color: #fff;
+            border-radius: 14px;
+            padding: 12px 14px 12px 12px;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.12), rgba(255, 0, 128, 0.12));
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,.45);
+            overflow: hidden;
+            animation: toastSlideIn .35s ease-out forwards;
+        }
+        .cyber-toast::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 16px;
+            pointer-events: none;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+        }
+        .cyber-toast.success { border-color: rgba(34, 197, 94, 0.5); }
+        .cyber-toast.error { border-color: rgba(248, 113, 113, 0.6); }
+        .cyber-toast .title { font-weight: 800; letter-spacing: .02em; }
+        .cyber-toast .msg { font-size: .9rem; color: #d1d5db; }
+        .cyber-toast .icon {
+            width: 36px; height: 36px; border-radius: 9999px;
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, #22D3EE, #C084FC);
+            color: #111;
+            box-shadow: 0 0 18px rgba(34,211,238,.45);
+        }
+        .cyber-toast .close {
+            position: absolute; top: 6px; right: 8px; color: rgba(255,255,255,.7);
+            background: transparent; border: none; cursor: pointer; padding: 4px;
+        }
+        @keyframes toastSlideIn { from { transform: translateX(120%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes toastSlideOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(120%); opacity: 0; } }
     </style>
 </head>
 <body class="min-h-screen" data-authenticated="{{ auth()->check() ? 'true' : 'false' }}" style="background: linear-gradient(135deg, #0A0F2C 0%, #1A0B1A 25%, #0D0D0D 50%, #2D1B69 75%, #1A0B1A 100%);">
+    <!-- Cyber Toast Container -->
+    <div id="cyberToastContainer" class="fixed top-4 right-4 z-50 space-y-3"></div>
     <!-- Sidebar Overlay -->
     <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
     
@@ -572,6 +615,39 @@
     
     <!-- JavaScript -->
     <script>
+        // Flash toast from session
+        const __FLASH_TOAST__ = @json(session('toast'));
+        
+        // Global cyberpunk toast
+        function showToast({ title = 'Berhasil', message = '', type = 'success', duration = 3500 } = {}) {
+            try {
+                const container = document.getElementById('cyberToastContainer');
+                if (!container) return;
+                const toast = document.createElement('div');
+                toast.className = `cyber-toast ${type}`;
+                toast.innerHTML = `
+                    <button class="close" aria-label="Tutup">\n<i class=\"fas fa-times\"></i></button>
+                    <div class="flex items-start gap-3 pr-6">
+                        <div class="icon"><i class="fas ${type === 'success' ? 'fa-check' : (type === 'error' ? 'fa-times' : 'fa-info')} "></i></div>
+                        <div>
+                            <div class="title">${title}</div>
+                            ${message ? `<div class="msg mt-0.5">${message}</div>` : ''}
+                        </div>
+                    </div>`;
+                container.appendChild(toast);
+                const remove = () => {
+                    try { toast.style.animation = 'toastSlideOut .3s ease-in forwards'; setTimeout(() => toast.remove(), 280); } catch(_) { toast.remove(); }
+                };
+                toast.querySelector('.close')?.addEventListener('click', remove);
+                setTimeout(remove, duration);
+            } catch (e) { /* noop */ }
+        }
+        window.showToast = showToast;
+        
+        if (__FLASH_TOAST__) {
+            document.addEventListener('DOMContentLoaded', () => showToast(__FLASH_TOAST__));
+        }
+        
         // Sidebar Toggle
         const sidebar = document.getElementById('sidebar');
         const sidebarOverlay = document.getElementById('sidebar-overlay');
