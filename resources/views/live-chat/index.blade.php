@@ -1160,7 +1160,14 @@ document.addEventListener('DOMContentLoaded', function() {
         // Only add new messages that haven't been displayed yet
         messages.forEach(message => {
             if (!lastMessageIds.has(message.id)) {
-                addMessageToChat(message.message, message.sender_type, message.sender_name, true, message.id);
+                addMessageToChat(
+                    message.message,
+                    message.sender_type,
+                    message.sender_name,
+                    true,
+                    message.id,
+                    message.timestamp || message.created_at || null
+                );
                 lastMessageIds.add(message.id);
                 shouldScroll = true;
             }
@@ -1178,7 +1185,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Add message to chat
-    function addMessageToChat(message, senderType, senderName, animate = true, messageId = null) {
+    function addMessageToChat(message, senderType, senderName, animate = true, messageId = null, createdAtIso = null) {
         const messageElement = document.createElement('div');
         messageElement.className = `message-bubble ${senderType}`;
         
@@ -1192,18 +1199,21 @@ document.addEventListener('DOMContentLoaded', function() {
             messageElement.style.transform = 'translateY(20px)';
         }
         
-        const timestamp = new Date().toLocaleTimeString('en-US', { 
-            hour12: false, 
-            hour: '2-digit', 
-            minute: '2-digit' 
-        });
+        // Use server timestamp if provided, fallback to now
+        let localTime = '';
+        try {
+            const dateObj = createdAtIso ? new Date(createdAtIso) : new Date();
+            localTime = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+        } catch (_) {
+            localTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+        }
         
         messageElement.innerHTML = `
             <div class="message-content">
                 <div>${message}</div>
             </div>
             <div class="message-meta">
-                ${senderName} • ${timestamp}
+                ${senderName} • ${localTime}
             </div>
         `;
         
