@@ -27,7 +27,7 @@
             <div class="bg-gradient-to-br from-gray-900/80 to-gray-800/60 border border-cyan-400/30 rounded-2xl p-6 flex flex-col justify-between">
                 <div>
                     <div class="text-gray-300 text-sm">Saldo Kamu</div>
-                    <div class="text-2xl md:text-3xl font-mono text-cyan-300 tracking-wider mt-1">Rp {{ number_format($balance, 0, ',', '.') }}</div>
+                    <div class="text-2xl md:text-3xl font-mono text-cyan-300 tracking-wider mt-1">Rp {{ number_format(optional(auth()->user())->balance ?? 0, 0, ',', '.') }}</div>
                 </div>
                 <div class="grid grid-cols-2 gap-3 mt-4">
                     <a href="#" class="px-4 py-3 rounded-xl text-center font-semibold bg-gradient-to-r from-green-500 to-emerald-600 text-white hover:from-green-600 hover:to-emerald-700 transition">

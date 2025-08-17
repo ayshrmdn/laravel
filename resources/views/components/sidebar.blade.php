@@ -134,7 +134,7 @@
                     <p class="text-gray-300 text-xs mb-1">Current Balance</p>
                     <div class="bg-black/50 rounded-lg px-3 py-2 border border-emerald-400/30">
                         <p class="text-emerald-300 text-lg font-mono font-bold tracking-wider">
-                            IDR {{ number_format(0, 0, ',', '.') }}
+                            IDR {{ number_format(optional(auth()->user())->balance ?? 0, 0, ',', '.') }}
                         </p>
                     </div>
                 </div>

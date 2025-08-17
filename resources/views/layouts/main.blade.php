@@ -482,7 +482,7 @@
                             <div class="flex items-center space-x-3">
                                 <div class="text-white text-right hidden sm:block">
                                     <div class="text-sm">{{ auth()->user()->full_name ?? auth()->user()->username }}</div>
-                                    <div class="text-xs text-cyan-400">Saldo: Rp {{ number_format(0, 0, ',', '.') }}</div>
+                                    <div class="text-xs text-cyan-400">Saldo: Rp {{ number_format(optional(auth()->user())->balance ?? 0, 0, ',', '.') }}</div>
                                 </div>
                                 <div class="w-10 h-10 bg-gradient-to-r from-cyan-400 to-pink-500 rounded-full flex items-center justify-center" style="box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);">
                                     <i class="fas fa-user text-white"></i>
