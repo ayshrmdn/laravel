@@ -184,16 +184,8 @@
 </div>
 
 <!-- Cyber Service Stats Section -->
-<div class="bg-black relative overflow-hidden py-12">
-    <!-- Cyber Background Effects -->
-    <div class="absolute inset-0 opacity-20">
-        <div class="absolute inset-0" style="background-image: radial-gradient(circle at 25% 25%, rgba(0, 255, 255, 0.1) 2px, transparent 2px), radial-gradient(circle at 75% 75%, rgba(255, 0, 128, 0.1) 2px, transparent 2px); background-size: 60px 60px; animation: pulseGrid 8s ease-in-out infinite;">
-        </div>
-        <div class="absolute top-1/4 left-1/4 w-3 h-3 bg-cyan-400 rounded-full animate-pulse opacity-30"></div>
-        <div class="absolute top-3/4 right-1/4 w-2 h-2 bg-pink-400 rounded-full animate-pulse opacity-30" style="animation-delay: 2s;"></div>
-    </div>
-
-    <div class="relative z-10 max-w-6xl mx-auto px-4">
+<div class="relative py-12">
+    <div class="max-w-6xl mx-auto px-4">
         <!-- Section Header -->
         <div class="text-center mb-12">
             <h2 class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 mb-4 cyber-stats-title">
