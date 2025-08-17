@@ -38,7 +38,10 @@
 
     <div class="relative z-10 max-w-6xl mx-auto px-4 py-8">
         <div class="text-center mb-8">
-            <h1 class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 mb-2">PROMO</h1>
+            <div class="inline-block relative promo-title-wrap">
+                <h1 class="promo-heading text-3xl md:text-4xl" data-text="PROMO">PROMO</h1>
+                <div class="promo-scanline"></div>
+            </div>
             <div class="cyber-stats-underline"></div>
         </div>
 
@@ -79,7 +82,7 @@
     @keyframes smoothMarquee { 0% { transform: translateX(100%);} 100% { transform: translateX(-100%);} }
     .animate-smooth-marquee { animation: smoothMarquee 30s linear infinite; }
     @media (max-width: 640px) { .animate-smooth-marquee { animation: smoothMarquee 35s linear infinite; } }
-    @keyframes gridMove { 0% { background-position: 0 0; } 100% { background-position: 50px 50px; } }
+    @keyframes gridMove { 0% { background-position: 0 0; } 100% { background-position: 50px 50%; } }
 
     /* Full-width image on mobile (no crop) */
     .promo-image { width: 100%; height: auto; object-fit: contain; max-height: 70vh; background: rgba(0,0,0,0.2); }
@@ -87,7 +90,48 @@
         .promo-image { height: 14rem; object-fit: cover; }
     }
 
-    /* Modern neon title */
+    /* Cyberpunk animated heading */
+    .promo-title-wrap { position: relative; padding: 6px 10px; }
+    .promo-heading {
+        position: relative;
+        font-weight: 900;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        background: linear-gradient(90deg, #22D3EE, #C084FC, #FB7185, #22D3EE);
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+        animation: promoGradient 6s linear infinite;
+        text-shadow: 0 0 20px rgba(34,211,238,.45), 0 0 35px rgba(139,0,255,.35);
+        filter: drop-shadow(0 0 10px rgba(0,255,255,.25));
+    }
+    .promo-heading::before,
+    .promo-heading::after {
+        content: attr(data-text);
+        position: absolute; inset: 0; pointer-events: none;
+        mix-blend-mode: screen; opacity: .6;
+        text-shadow: none; color: #00FFFF;
+    }
+    .promo-heading::before { transform: translateX(-1px); color: #00FFFF; animation: glitchShift 2.8s steps(8,end) infinite; }
+    .promo-heading::after  { transform: translateX(1px);  color: #FF0080; animation: glitchShift 2.8s steps(6,end) infinite reverse; }
+
+    @keyframes promoGradient { 0% { background-position: 200% 0; } 100% { background-position: 0 0; } }
+    @keyframes glitchShift {
+        0% { clip-path: inset(0 0 82% 0); }
+        20% { clip-path: inset(10% 0 68% 0); }
+        40% { clip-path: inset(40% 0 40% 0); }
+        60% { clip-path: inset(65% 0 15% 0); }
+        80% { clip-path: inset(90% 0 0 0); }
+        100% { clip-path: inset(0 0 82% 0); }
+    }
+
+    .promo-scanline {
+        position: absolute; inset: 0; pointer-events: none;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent);
+        transform: translateX(-100%);
+        animation: scanMove 2.8s linear infinite;
+    }
+    @keyframes scanMove { 0% { transform: translateX(-100%);} 100% { transform: translateX(100%);} }
+
+    /* Card title under image */
     .promo-title {
         font-weight: 800;
         letter-spacing: 0.06em;
@@ -120,12 +164,8 @@
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
-    .promo-desc.clamped {
-        -webkit-line-clamp: 2; /* show two lines */
-    }
-    .promo-desc.expanded {
-        display: block; /* auto height */
-    }
+    .promo-desc.clamped { -webkit-line-clamp: 2; }
+    .promo-desc.expanded { display: block; }
 </style>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -143,12 +183,9 @@
         document.querySelectorAll('.promo-desc').forEach(function(p){
             const btn = p.closest('.p-4').querySelector('.read-more-btn');
             if (!btn) return;
-            // Measure if clamped: compare scrollHeight vs offsetHeight
             requestAnimationFrame(() => {
-                const isOverflowing = p.scrollHeight > p.offsetHeight + 2; // allow small rounding
-                if (isOverflowing) {
-                    btn.style.display = 'inline-block';
-                }
+                const isOverflowing = p.scrollHeight > p.offsetHeight + 2;
+                if (isOverflowing) { btn.style.display = 'inline-block'; }
             });
         });
 
@@ -167,7 +204,7 @@
                     paragraph.classList.remove('expanded');
                     paragraph.classList.add('clamped');
                     const full = paragraph.getAttribute('data-full-text') || '';
-                    paragraph.textContent = full; // white-space: pre-line with clamp handles truncation visually
+                    paragraph.textContent = full;
                     this.textContent = 'Selengkapnya';
                     this.setAttribute('data-state', 'collapsed');
                 }
