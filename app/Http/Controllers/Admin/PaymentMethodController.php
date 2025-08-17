@@ -29,6 +29,7 @@ class PaymentMethodController extends Controller
             'name' => $request->input('name'),
             'icon_path' => $path,
             'is_active' => true,
+            'is_online' => (bool) $request->input('is_online', true),
             'sort_order' => (int) $request->input('sort_order', 0),
         ]);
 
@@ -42,6 +43,7 @@ class PaymentMethodController extends Controller
             'name' => 'nullable|string|max:100',
             'sort_order' => 'nullable|integer|min:0|max:1000000',
             'is_active' => 'nullable|boolean',
+            'is_online' => 'nullable|boolean',
         ]);
 
         if ($request->hasFile('icon')) {
@@ -54,6 +56,7 @@ class PaymentMethodController extends Controller
         $paymentMethod->name = $request->input('name');
         $paymentMethod->sort_order = (int) $request->input('sort_order', $paymentMethod->sort_order);
         $paymentMethod->is_active = (bool) $request->input('is_active', $paymentMethod->is_active);
+        $paymentMethod->is_online = (bool) $request->input('is_online', $paymentMethod->is_online);
         $paymentMethod->save();
 
         return redirect()->back()->with('success', 'Metode pembayaran diperbarui.');
@@ -72,6 +75,13 @@ class PaymentMethodController extends Controller
     {
         $paymentMethod->is_active = ! $paymentMethod->is_active;
         $paymentMethod->save();
-        return redirect()->back()->with('success', 'Status metode pembayaran diperbarui.');
+        return redirect()->back()->with('success', 'Status tampil diperbarui.');
+    }
+
+    public function toggleOnline(PaymentMethod $paymentMethod)
+    {
+        $paymentMethod->is_online = ! $paymentMethod->is_online;
+        $paymentMethod->save();
+        return redirect()->back()->with('success', 'Status online diperbarui.');
     }
 }

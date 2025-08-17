@@ -261,17 +261,23 @@
     </div>
 </div>
 
-<!-- Payment Methods -->
+<!-- Payment Methods (separate section) -->
 @if(isset($paymentMethods) && $paymentMethods->count())
-<div class="bg-black py-6">
+<div class="py-8">
     <div class="max-w-6xl mx-auto px-4">
-        <div class="text-center mb-4">
-            <h3 class="text-lg font-semibold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400">METODE PEMBAYARAN</h3>
-        </div>
-        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 items-center justify-items-center">
-            @foreach($paymentMethods as $method)
-                <img src="{{ asset('storage/' . $method->icon_path) }}" alt="{{ $method->name }}" class="h-10 sm:h-12 md:h-14 object-contain opacity-90 hover:opacity-100 transition" />
-            @endforeach
+        <div class="bg-gradient-to-br from-gray-900/80 to-gray-800/60 border border-cyan-400/20 rounded-2xl p-6">
+            <div class="text-center mb-4">
+                <h3 class="text-lg font-semibold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400">METODE PEMBAYARAN</h3>
+            </div>
+            <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 items-center justify-items-center">
+                @foreach($paymentMethods as $method)
+                    <div class="relative text-center">
+                        <img src="{{ asset('storage/' . $method->icon_path) }}" alt="{{ $method->name }}" class="h-10 sm:h-12 md:h-14 object-contain {{ $method->is_online ? 'opacity-100' : 'opacity-60 grayscale' }}" />
+                        <span class="absolute -top-1 -right-1 w-3 h-3 rounded-full {{ $method->is_online ? 'bg-green-400' : 'bg-red-500' }}"></span>
+                        <div class="mt-1 text-[10px] font-mono {{ $method->is_online ? 'text-green-400' : 'text-red-400' }}">{{ $method->is_online ? 'ONLINE' : 'OFFLINE' }}</div>
+                    </div>
+                @endforeach
+            </div>
         </div>
     </div>
 </div>

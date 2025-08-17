@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use App\Models\Promo;
+use App\Models\PaymentMethod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -21,8 +22,9 @@ class SettingsController extends Controller
         ];
 
         $promos = Promo::orderBy('sort_order')->latest('id')->paginate(6);
+        $paymentMethods = PaymentMethod::orderBy('sort_order')->latest('id')->paginate(12);
 
-        return view('admin.settings.index', compact('settings', 'promos'));
+        return view('admin.settings.index', compact('settings', 'promos', 'paymentMethods'));
     }
 
     public function update(Request $request)

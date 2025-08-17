@@ -40,7 +40,14 @@
             @foreach($methods as $method)
             <div class="border border-cyan-500/30 rounded-lg p-4 bg-gradient-to-br from-gray-900/80 to-gray-800/60 text-center">
                 <img src="{{ asset('storage/' . $method->icon_path) }}" class="mx-auto h-12 object-contain" alt="{{ $method->name }}">
-                <div class="text-xs text-gray-300 mt-2 truncate">{{ $method->name ?: 'Tanpa Nama' }}</div>
+                <div class="text-xs text-gray-300 mt-2 truncate flex items-center justify-center gap-2">
+                    <span class="inline-flex items-center text-[10px] font-mono {{ $method->is_online ? 'text-green-400' : 'text-red-400' }}">
+                        <span class="w-2 h-2 rounded-full mr-1 {{ $method->is_online ? 'bg-green-400' : 'bg-red-500' }}"></span>
+                        {{ $method->is_online ? 'ONLINE' : 'OFFLINE' }}
+                    </span>
+                    <span class="text-gray-400">•</span>
+                    <span>{{ $method->name ?: 'Tanpa Nama' }}</span>
+                </div>
                 <div class="flex items-center justify-center gap-2 mt-3">
                     <form action="{{ route('admin.payment-methods.update', $method) }}" method="POST" enctype="multipart/form-data" class="flex-1">
                         @csrf
@@ -49,6 +56,10 @@
                         <input type="text" name="name" value="{{ $method->name }}" class="block w-full cyber-input text-xs mt-2" placeholder="Nama">
                         <div class="grid grid-cols-2 gap-2 mt-2">
                             <input type="number" name="sort_order" value="{{ $method->sort_order }}" class="cyber-input text-xs" min="0">
+                            <label class="inline-flex items-center justify-center border border-cyan-500/30 rounded-lg">
+                                <input type="checkbox" name="is_online" value="1" {{ $method->is_online ? 'checked' : '' }} class="form-checkbox text-emerald-500">
+                                <span class="ml-2 text-white">Online</span>
+                            </label>
                             <label class="inline-flex items-center justify-center border border-cyan-500/30 rounded-lg">
                                 <input type="checkbox" name="is_active" value="1" {{ $method->is_active ? 'checked' : '' }} class="form-checkbox text-cyan-500">
                                 <span class="ml-2 text-white">Tampil</span>

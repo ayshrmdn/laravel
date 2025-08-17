@@ -10,11 +10,13 @@ class PaymentMethod extends Model
         'name',
         'icon_path',
         'is_active',
+        'is_online',
         'sort_order',
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
+        'is_online' => 'boolean',
         'sort_order' => 'integer',
     ];
 }

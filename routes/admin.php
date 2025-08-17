@@ -70,5 +70,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('/payment-methods/{paymentMethod}', [PaymentMethodController::class, 'update'])->name('payment-methods.update');
         Route::delete('/payment-methods/{paymentMethod}', [PaymentMethodController::class, 'destroy'])->name('payment-methods.destroy');
         Route::patch('/payment-methods/{paymentMethod}/toggle', [PaymentMethodController::class, 'toggle'])->name('payment-methods.toggle');
+        Route::patch('/payment-methods/{paymentMethod}/toggle-online', [PaymentMethodController::class, 'toggleOnline'])->name('payment-methods.toggle-online');
 });
 });
