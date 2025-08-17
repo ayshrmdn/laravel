@@ -26,7 +26,7 @@
                     </div>
                 </div>
             </div>
-            <div class="lg:col-span-1 flex items-end">
+            <div class="lg:col-span-1 flex items-end sm:items-start">
                 <button type="submit" class="w-full px-6 py-3 bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-medium rounded-lg hover:from-cyan-600 hover:to-purple-700">
                     <i class="fas fa-upload mr-2"></i>Tambah Ikon
                 </button>
@@ -36,9 +36,9 @@
 
     <div class="cyber-card p-6">
         <h2 class="text-lg font-semibold text-white mb-4">Daftar Metode Pembayaran</h2>
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-5">
             @foreach($methods as $method)
-            <div class="border border-cyan-500/30 rounded-lg p-4 bg-gradient-to-br from-gray-900/80 to-gray-800/60 text-center">
+            <div class="border border-cyan-500/30 rounded-xl p-4 bg-gradient-to-br from-gray-900/80 to-gray-800/60 text-center flex flex-col">
                 <img src="{{ asset('storage/' . $method->icon_path) }}" class="mx-auto h-12 object-contain" alt="{{ $method->name }}">
                 <div class="text-xs text-gray-300 mt-2 truncate flex items-center justify-center gap-2">
                     <span class="inline-flex items-center text-[10px] font-mono {{ $method->is_online ? 'text-green-400' : 'text-red-400' }}">
@@ -48,7 +48,7 @@
                     <span class="text-gray-400">•</span>
                     <span>{{ $method->name ?: 'Tanpa Nama' }}</span>
                 </div>
-                <div class="flex items-center justify-center gap-2 mt-3">
+                <div class="mt-3 space-y-2">
                     <form action="{{ route('admin.payment-methods.update', $method) }}" method="POST" enctype="multipart/form-data" class="flex-1">
                         @csrf
                         @method('PUT')
@@ -68,15 +68,15 @@
                         <button type="submit" class="w-full mt-2 px-3 py-2 bg-gradient-to-r from-cyan-500 to-purple-600 text-white text-xs rounded">
                             <i class="fas fa-save mr-1"></i>Simpan
                         </button>
-                    </form>
-                    <form action="{{ route('admin.payment-methods.destroy', $method) }}" method="POST" onsubmit="return confirm('Hapus ikon ini?')">
-                        @csrf
-                        @method('DELETE')
-                        <button class="px-3 py-2 bg-red-600 text-white text-xs rounded hover:bg-red-700">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </form>
-                </div>
+                                         </form>
+                     <form action="{{ route('admin.payment-methods.destroy', $method) }}" method="POST" onsubmit="return confirm('Hapus ikon ini?')" class="flex justify-center">
+                         @csrf
+                         @method('DELETE')
+                         <button class="px-3 py-2 bg-red-600 text-white text-xs rounded hover:bg-red-700">
+                             <i class="fas fa-trash"></i>
+                         </button>
+                     </form>
+                 </div>
             </div>
             @endforeach
         </div>
