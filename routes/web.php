@@ -12,6 +12,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::middleware('auth')->group(function () {
     Route::get('/beranda', [HomeController::class, 'dashboard'])->name('dashboard');
 });
+// Gracefully handle accidental POST to /beranda
+Route::post('/beranda', function() { return redirect()->route('home'); });
 Route::get('/live-chat', [LiveChatController::class, 'index'])->name('live-chat');
 // Gracefully handle accidental POST to /live-chat (e.g., from form default submit)
 Route::post('/live-chat', function() { return redirect()->route('live-chat'); });
