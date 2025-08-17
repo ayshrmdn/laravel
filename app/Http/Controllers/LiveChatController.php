@@ -149,11 +149,12 @@ class LiveChatController extends Controller
 
             // Auto-greet on first user message if chat has only 1 message
             if (Message::where('chat_id', $chat->id)->count() === 1) {
+                $adminName = \App\Models\Setting::get('support_admin_name', 'Admin Dukungan');
                 $greetText = 'Selamat datang ' . ($chat->guest_name ?: 'pengguna') . ', ada yang bisa dibantu?';
                 Message::create([
                     'chat_id' => $chat->id,
                     'sender_type' => 'admin',
-                    'sender_id' => null,
+                    'sender_id' => null, // could be filled with admin id in future
                     'message' => $greetText,
                     'type' => 'text',
                     'is_read' => false
@@ -200,7 +201,7 @@ class LiveChatController extends Controller
                         'message' => $message->message,
                         'sender_type' => $message->sender_type === 'admin' ? 'admin' : 'guest',
                         'sender_name' => $message->sender_type === 'admin' 
-                            ? 'Admin Dukungan' 
+                            ? (\App\Models\Setting::get('support_admin_name', 'Admin Dukungan')) 
                             : ($chat->guest_name ?? 'Tamu'),
                         'timestamp' => $message->created_at->toISOString(),
                         'created_at' => $message->created_at,

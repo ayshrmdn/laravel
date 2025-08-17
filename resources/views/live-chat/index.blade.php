@@ -90,7 +90,7 @@
                                     <div class="cyber-status-dot online"></div>
                                 </div>
                                 <div>
-                                    <h3 class="text-cyan-400 font-bold font-mono">Agen Dukungan</h3>
+                                    <h3 class="text-cyan-400 font-bold font-mono">{{ \App\Models\Setting::get('support_agent_name', 'Agen Dukungan') }}</h3>
                                     <p class="text-green-400 text-sm font-mono">• Online</p>
                                 </div>
                             </div>

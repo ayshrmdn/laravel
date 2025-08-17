@@ -198,6 +198,24 @@
                 </div>
             </div>
         </div>
+        <!-- Support naming -->
+        <div class="cyber-card">
+            <div class="cyber-section-title mb-4">
+                <i class="fas fa-headset mr-3"></i>
+                Nama Agen/Admin Dukungan
+            </div>
+            <div class="p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-white mb-2">Nama Agen Dukungan (tampilan di user)</label>
+                    <input type="text" name="support_agent_name" value="{{ old('support_agent_name', $settings['support_agent_name'] ?? 'Agen Dukungan') }}" class="cyber-input" placeholder="Contoh: Agen Dukungan">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-white mb-2">Nama Admin Dukungan (tampilan di balasan admin)</label>
+                    <input type="text" name="support_admin_name" value="{{ old('support_admin_name', $settings['support_admin_name'] ?? 'Admin Dukungan') }}" class="cyber-input" placeholder="Contoh: Admin Dukungan">
+                </div>
+            </div>
+        </div>
+
         <!-- Site Information Section -->
         <div class="cyber-card overflow-hidden">
             <div class="px-6 py-4 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-gray-200">

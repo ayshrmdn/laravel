@@ -19,6 +19,8 @@ class SettingsController extends Controller
             'site_description' => Setting::get('site_description', 'Situs Game Online Terpercaya'),
             'support_agent_image' => Setting::get('support_agent_image', null),
             'gif_banner' => Setting::get('gif_banner', null),
+            'support_agent_name' => Setting::get('support_agent_name', 'Agen Dukungan'),
+            'support_admin_name' => Setting::get('support_admin_name', 'Admin Dukungan'),
             'site_long_description' => Setting::get('site_long_description', "MPOELOT adalah situs slot online terpercaya dengan koleksi game resmi RTP tinggi, transaksi cepat, dan layanan 24/7. Nikmati pengalaman bermain yang aman, adil, serta promosi menarik setiap hari. Dukung deposit via bank & e-wallet populer. Main dengan bijak dan raih jackpot!"),
         ];
 
@@ -36,7 +38,9 @@ class SettingsController extends Controller
             'site_long_description' => 'nullable|string|max:5000',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'support_agent_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'gif_banner' => 'nullable|mimes:gif|max:10240', // Max 10MB for GIF
+            'gif_banner' => 'nullable|mimes:gif|max:10240', // Max 10MB for GIF,
+            'support_agent_name' => 'nullable|string|max:50',
+            'support_admin_name' => 'nullable|string|max:50',
         ]);
 
         // Update site name
@@ -78,6 +82,14 @@ class SettingsController extends Controller
             // Store new support agent image
             $supportAgentImagePath = $request->file('support_agent_image')->store('support-agents', 'public');
             Setting::set('support_agent_image', $supportAgentImagePath, 'image');
+        }
+
+        // Update support naming
+        if ($request->has('support_agent_name')) {
+            Setting::set('support_agent_name', $request->support_agent_name);
+        }
+        if ($request->has('support_admin_name')) {
+            Setting::set('support_admin_name', $request->support_admin_name);
         }
 
         // Update GIF banner
