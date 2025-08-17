@@ -21,7 +21,7 @@
         </div>
 
         <!-- Chat Container -->
-        <div class="cyber-card p-0 overflow-hidden" style="height: calc(100vh - 300px);">
+        <div class="cyber-card p-0 overflow-hidden" style="height: calc(100vh - 180px);">
             <div class="flex h-full flex-col md:flex-row">
                 <!-- Chat List Sidebar -->
                 <div class="w-full md:w-1/3 border-r border-gray-700 flex flex-col min-h-0">
@@ -105,7 +105,7 @@
                 </div>
 
                 <!-- Chat Area -->
-                <div class="hidden md:flex flex-1 flex-col min-h-0" id="chatArea">
+                <div class="hidden md:flex flex-1 flex-col min-h-0" id="chatArea" style="min-height: 0;">
                     <!-- Chat Header -->
                     <div class="p-4 md:p-6 border-b border-gray-700 bg-gray-800 flex-shrink-0" id="chatHeader" style="display: none;">
                         <div class="flex items-center">
@@ -125,7 +125,7 @@
                     </div>
 
                     <!-- Messages Area -->
-                    <div class="flex-1 overflow-y-auto p-4 md:p-6 space-y-4 min-h-0 bg-gray-900" id="messagesArea">
+                    <div class="flex-1 overflow-y-auto p-4 md:p-6 space-y-4 min-h-0 bg-gray-900" id="messagesArea" style="scroll-behavior: smooth;">
                         <!-- Default state -->
                         <div class="flex items-center justify-center h-full text-gray-400" id="defaultChatState">
                             <div class="text-center">
@@ -243,7 +243,7 @@
 /* Mobile optimizations */
 @media (max-width: 768px) {
     .cyber-card {
-        height: calc(100vh - 200px) !important;
+        height: calc(100vh - 160px) !important;
     }
     
     #messagesArea {
@@ -658,9 +658,9 @@ function displayMessages(messages) {
                     
                     <div class="flex flex-col min-w-0 flex-1">
                         <div class="px-3 py-2 rounded-2xl ${isAdmin 
-                            ? 'bg-gradient-to-r from-red-500 to-purple-600 text-white rounded-br-sm' 
-                            : 'bg-gray-100 text-gray-900 rounded-bl-sm'
-                        } break-words">
+                            ? 'bg-gradient-to-r from-red-500 to-purple-600 text-white rounded-br-sm shadow-lg' 
+                            : 'bg-white/90 backdrop-blur-sm text-gray-900 rounded-bl-sm shadow'
+                        } break-words border border-white/10">
                             <p class="text-sm leading-relaxed">${message.message}</p>
                         </div>
                         <div class="text-xs text-gray-500 mt-1 ${isAdmin ? 'text-right' : 'text-left'} px-1">
