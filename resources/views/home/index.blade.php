@@ -45,9 +45,9 @@
     <div class="relative w-screen max-w-[100vw] left-1/2 -translate-x-1/2">
         <div id="bannerSlider" class="flex w-screen transition-transform duration-500 ease-in-out">
             @foreach($banners as $index => $banner)
-            <div class="min-w-full relative bg-gradient-to-r from-red-900 via-purple-900 to-red-800">
+            <div class="min-w-full relative">
                 @if($banner->image)
-                    <img src="{{ asset('storage/' . $banner->image) }}" alt="Banner {{ $index + 1 }}" class="w-full h-40 sm:h-48 md:h-[380px] lg:h-[460px] object-contain sm:object-cover">
+                    <img src="{{ asset('storage/' . $banner->image) }}" alt="Banner {{ $index + 1 }}" class="w-full h-auto sm:h-48 md:h-[380px] lg:h-[460px] object-contain sm:object-cover">
                 @else
                     <div class="w-full h-48 bg-gradient-to-r from-red-900 via-purple-900 to-red-800"></div>
                 @endif
