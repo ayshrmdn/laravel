@@ -198,8 +198,6 @@
                 </div>
             </div>
         </div>
-        @include('admin.promos.quick-upload')
-
         <!-- Site Information Section -->
         <div class="cyber-card overflow-hidden">
             <div class="px-6 py-4 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-gray-200">
