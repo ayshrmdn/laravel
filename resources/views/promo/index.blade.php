@@ -3,7 +3,7 @@
 @section('title', 'Promo Terbaru - ' . \App\Models\Setting::get('site_name', 'MPOELOT'))
 
 @section('content')
-<!-- Sticky Announcement (revert to simple gradient) -->
+<!-- Sticky Announcement (match home style) -->
 <div class="text-white shadow-lg overflow-hidden sticky-announcement" style="background: linear-gradient(90deg, #00FFFF 0%, #FF0080 25%, #8B00FF 50%, #FF0040 75%, #00FFFF 100%);">
     <div class="absolute inset-0 opacity-10">
         <div class="absolute top-1 left-8 w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div>
@@ -21,7 +21,7 @@
                 <div id="promoMarquee" class="flex animate-smooth-marquee whitespace-nowrap">
                     <div class="flex items-center">
                         <span class="mx-4 sm:mx-8 text-xs sm:text-sm font-bold text-white">
-                            Temukan promo terbaik dan terbaru kami. Nikmati bonus menarik setiap hari!
+                            Selamat Datang Di BOSCUAN69. Sebagai Penyedia Game Online Resmi Deposit Pulsa Tanpa Potongan Dan Depo Qris & Emoney Terpercaya...
                         </span>
                     </div>
                 </div>
