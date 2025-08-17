@@ -965,8 +965,8 @@
         .jackpot-frame { max-width: 1100px; margin-left: auto; margin-right: auto; }
         .gif-banner-img { object-position: center; }
         .jackpot-overlay { justify-content: center !important; padding-right: 0; }
-        .jackpot-currency { font-size: 1rem; }
-        #jackpot-amount { font-size: 1.4rem; letter-spacing: .08em; }
+        .jackpot-currency { font-size: 1.2rem; }
+        #jackpot-amount { font-size: 2.2rem; letter-spacing: .12em; }
     }
 </style>
 @endverbatim
