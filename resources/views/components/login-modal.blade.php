@@ -693,22 +693,30 @@ document.getElementById('registerTab').addEventListener('click', function() {
 });
 
 // Form Submissions
-document.getElementById('loginForm').addEventListener('submit', function(e) {
+document.getElementById('loginForm').addEventListener('submit', async function(e) {
     e.preventDefault();
-    // Add loading state
     const btn = this.querySelector('.cyber-submit-btn');
     btn.innerHTML = '<span class="relative z-10"><i class="fas fa-spinner fa-spin mr-2"></i>Connecting...</span>';
     
-    setTimeout(() => {
-        alert('Login functionality will be implemented');
+    try {
+        const formData = new FormData(this);
+        const res = await fetch('{{ route('auth.login') }}', {
+            method: 'POST',
+            headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') },
+            body: formData
+        });
+        const data = await res.json();
+        if (!res.ok || !data.success) throw new Error(data.message || 'Login gagal');
+        window.location.href = data.redirect || '{{ route('dashboard') }}';
+    } catch (err) {
+        alert(err.message);
         btn.innerHTML = '<span class="relative z-10"><i class="fas fa-sign-in-alt mr-2"></i>Masuk Portal</span>';
-    }, 2000);
+    }
 });
 
-document.getElementById('registerForm').addEventListener('submit', function(e) {
+document.getElementById('registerForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
-    // Validate captcha
     const captchaInput = this.querySelector('input[name="captcha"]').value;
     if (captchaInput !== currentCaptcha) {
         alert('Kode verifikasi salah! Silakan coba lagi.');
@@ -718,15 +726,28 @@ document.getElementById('registerForm').addEventListener('submit', function(e) {
         return;
     }
     
-    // Add loading state
     const btn = this.querySelector('.cyber-submit-btn');
     btn.innerHTML = '<span class="relative z-10"><i class="fas fa-spinner fa-spin mr-2"></i>Creating...</span>';
     
-    setTimeout(() => {
-        alert('Register functionality will be implemented');
+    try {
+        const formData = new FormData(this);
+        // map password confirmation to expected field name
+        const pass = this.querySelector('input[name="password"]').value;
+        const passConf = this.querySelector('input[name="password_confirmation"]').value;
+        formData.append('password_confirmation', passConf);
+        const res = await fetch('{{ route('auth.register') }}', {
+            method: 'POST',
+            headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') },
+            body: formData
+        });
+        const data = await res.json();
+        if (!res.ok || !data.success) throw new Error(data.message || 'Registrasi gagal');
+        window.location.href = data.redirect || '{{ route('dashboard') }}';
+    } catch (err) {
+        alert(err.message);
         btn.innerHTML = '<span class="relative z-10"><i class="fas fa-user-plus mr-2"></i>Daftar Portal</span>';
-        generateCaptcha(); // Generate new captcha for next attempt
-    }, 2000);
+        generateCaptcha();
+    }
 });
 
 // Open register modal function
