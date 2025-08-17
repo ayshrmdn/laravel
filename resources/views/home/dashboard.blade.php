@@ -4,6 +4,34 @@
 
 @section('content')
 <div class="relative">
+    <!-- Sticky Announcement Ticker (reuse from home) -->
+    <div class="text-white shadow-lg overflow-hidden sticky-announcement" style="background: linear-gradient(90deg, #00FFFF 0%, #FF0080 25%, #8B00FF 50%, #FF0040 75%, #00FFFF 100%);">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-1 left-8 w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div>
+            <div class="absolute top-2 right-16 w-1 h-1 bg-white rounded-full animate-pulse" style="animation-delay: 0.5s;"></div>
+            <div class="absolute bottom-1 left-1/3 w-1.5 h-1.5 bg-white rounded-full animate-pulse" style="animation-delay: 1s;"></div>
+        </div>
+        <div class="relative py-0.5">
+            <div class="flex items-center min-h-6">
+                <div class="flex-shrink-0 px-2 flex items-center">
+                    <div class="bg-white bg-opacity-20 rounded-full p-0.5 animate-pulse">
+                        <i class="fas fa-bullhorn text-xs text-cyan-100"></i>
+                    </div>
+                </div>
+                <div class="flex-1 overflow-hidden">
+                    <div class="flex animate-smooth-marquee whitespace-nowrap" id="marqueeDashboard">
+                        <div class="flex items-center">
+                            <span class="mx-4 sm:mx-8 text-xs sm:text-sm font-bold text-white">
+                                Selamat datang di {{ \App\Models\Setting::get('site_name', 'MPOELOT') }} — nikmati pengalaman bermain aman, cepat, dan penuh bonus! Promo harian siap menanti kamu.
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-400 via-pink-400 to-red-400"></div>
+    </div>
+
     <!-- Welcome / Balance Panel -->
     <div class="max-w-6xl mx-auto px-4 mt-6">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -98,3 +126,13 @@
     @endif
 </div>
 @endsection
+
+@push('scripts')
+@verbatim
+<style>
+@keyframes smoothMarquee { 0% { transform: translateX(100%);} 100% { transform: translateX(-100%);} }
+.animate-smooth-marquee { animation: smoothMarquee 30s linear infinite; }
+@media (max-width: 640px) { .animate-smooth-marquee { animation: smoothMarquee 35s linear infinite; } }
+</style>
+@endverbatim
+@endpush
