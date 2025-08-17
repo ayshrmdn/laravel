@@ -86,10 +86,37 @@ class HomeController extends Controller
                 $gifBanner = Setting::get('gif_banner');
 
                 $paymentMethods = PaymentMethod::where('is_active', true)->orderBy('sort_order')->get();
-
+ 
         $siteLongDescription = Setting::get('site_long_description', "MPOELOT adalah situs slot online terpercaya dengan koleksi game resmi RTP tinggi, transaksi cepat, dan layanan 24/7. Nikmati pengalaman bermain yang aman, adil, serta promosi menarik setiap hari. Dukung deposit via bank & e-wallet populer. Main dengan bijak dan raih jackpot!");
  
         return view('home.index', compact('popularGames', 'slots', 'banners', 'categories', 'gifBanner', 'paymentMethods', 'siteLongDescription'));
- }
+  }
+ 
+    public function dashboard(Request $request)
+    {
+        $user = $request->user();
 
+        // Reuse data but remove banners and categories for logged-in dashboard
+        $popularGames = Game::with(['provider', 'category'])
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->limit(8)
+            ->get()
+            ->map(fn($g) => [
+                'id' => $g->id,
+                'name' => $g->name,
+                'image' => $g->image_url,
+                'provider' => optional($g->provider)->name,
+            ]);
+
+        $paymentMethods = PaymentMethod::where('is_active', true)->orderBy('sort_order')->get();
+        $gifBanner = Setting::get('gif_banner');
+        $siteLongDescription = Setting::get('site_long_description');
+
+        // Example balance (replace with real wallet integration)
+        $balance = 0;
+
+        return view('home.dashboard', compact('user', 'popularGames', 'paymentMethods', 'gifBanner', 'siteLongDescription', 'balance'));
+    }
 }

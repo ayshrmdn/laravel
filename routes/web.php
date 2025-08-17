@@ -6,6 +6,11 @@ use App\Http\Controllers\LiveChatController;
 use App\Http\Controllers\PromoController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// Authenticated dashboard
+Route::middleware('auth')->group(function () {
+    Route::get('/beranda', [HomeController::class, 'dashboard'])->name('dashboard');
+});
 Route::get('/live-chat', [LiveChatController::class, 'index'])->name('live-chat');
 Route::get('/promo', [PromoController::class, 'index'])->name('promo');
 

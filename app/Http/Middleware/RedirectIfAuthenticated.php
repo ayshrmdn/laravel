@@ -8,23 +8,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RedirectIfAuthenticated
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
     public function handle(Request $request, Closure $next, string ...$guards): Response
     {
-        $guards = empty($guards) ? [null] : $guards;
-
-        foreach ($guards as $guard) {
-            if (auth()->guard($guard)->check()) {
-                if ($guard === 'admin') {
-                    return redirect()->route('admin.dashboard');
-                }
-                
-                return redirect('/');
-            }
+        if ($request->user()) {
+            return redirect()->route('dashboard');
         }
 
         return $next($request);

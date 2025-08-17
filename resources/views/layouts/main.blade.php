@@ -490,12 +490,12 @@
                             </div>
                         @else
                             <div class="flex items-center space-x-2">
-                                <button onclick="openRegisterModal()" class="cyber-auth-btn btn-register">
-                                    <span class="relative z-10">Daftar</span>
-                                </button>
-                                <button onclick="openLoginModal()" class="cyber-auth-btn btn-login">
-                                    <span class="relative z-10">Masuk</span>
-                                </button>
+                                <a href="#" class="cyber-auth-btn btn-register">
+                                    <span class="relative z-10">Deposit</span>
+                                </a>
+                                <a href="#" class="cyber-auth-btn btn-login">
+                                    <span class="relative z-10">Withdraw</span>
+                                </a>
                             </div>
                         @endauth
                     </div>
@@ -524,7 +524,7 @@
         <!-- Bottom Navigation -->
         <nav class="fixed bottom-0 left-0 right-0 backdrop-blur-xl border-t border-cyan-500/30 z-50 lightning-effect" style="position: fixed !important; bottom: 0 !important; background: linear-gradient(135deg, rgba(26, 11, 26, 0.8) 0%, rgba(13, 13, 13, 0.9) 50%, rgba(45, 27, 105, 0.8) 100%);">
             <div class="flex items-center justify-around h-16 px-4 relative z-10">
-                <a href="{{ route('home') }}" class="nav-item {{ request()->routeIs('home') ? 'active' : '' }}">
+                <a href="{{ auth()->check() ? route('dashboard') : route('home') }}" class="nav-item {{ (request()->routeIs('home') || request()->routeIs('dashboard')) ? 'active' : '' }}">
                     <div class="relative flex flex-col items-center group">
                         <div class="w-12 h-12 rounded-full flex items-center justify-center transform transition-all duration-500 ease-out group-hover:scale-110">
                             <i class="fas fa-home text-2xl {{ request()->routeIs('home') ? 'text-cyan-400' : 'text-gray-400' }} group-hover:text-cyan-400 transition-colors duration-300" style="filter: drop-shadow(0 0 8px currentColor);"></i>
