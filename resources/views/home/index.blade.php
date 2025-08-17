@@ -42,12 +42,12 @@
 <div class="relative overflow-hidden">
     
     <!-- Sliding Banner -->
-    <div class="relative">
-        <div id="bannerSlider" class="flex transition-transform duration-500 ease-in-out">
+    <div class="relative w-screen max-w-[100vw] left-1/2 -translate-x-1/2">
+        <div id="bannerSlider" class="flex w-screen transition-transform duration-500 ease-in-out">
             @foreach($banners as $index => $banner)
             <div class="min-w-full relative bg-gradient-to-r from-red-900 via-purple-900 to-red-800">
                 @if($banner->image)
-                    <img src="{{ asset('storage/' . $banner->image) }}" alt="Banner {{ $index + 1 }}" class="w-full h-48 md:h-[380px] lg:h-[460px] object-cover">
+                    <img src="{{ asset('storage/' . $banner->image) }}" alt="Banner {{ $index + 1 }}" class="w-full h-40 sm:h-48 md:h-[380px] lg:h-[460px] object-cover">
                 @else
                     <div class="w-full h-48 bg-gradient-to-r from-red-900 via-purple-900 to-red-800"></div>
                 @endif
