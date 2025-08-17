@@ -88,7 +88,7 @@
                                                 @endif
                                             </div>
                                             <div class="text-xs text-gray-500 flex-shrink-0 ml-2">
-                                                {{ $chat->last_message_at ? $chat->last_message_at->diffForHumans() : $chat->created_at->diffForHumans() }}
+                                                {{ ($chat->last_message_at ?: $chat->created_at)->format('H:i') }}
                                             </div>
                                         </div>
                                     </div>
