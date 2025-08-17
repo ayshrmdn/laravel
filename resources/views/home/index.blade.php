@@ -101,11 +101,11 @@
 @if($gifBanner)
 <div class="w-full bg-black relative">
     <div class="relative overflow-hidden">
-        <img src="{{ asset('storage/' . $gifBanner) }}" 
-             alt="GIF Banner" 
-             class="w-full h-auto max-h-48 object-cover object-center"
-             style="animation: subtle-glow 3s ease-in-out infinite alternate;">
-        
+                 <img src="{{ asset('storage/' . $gifBanner) }}" 
+              alt="GIF Banner" 
+              class="w-full h-auto max-h-48 object-cover object-center gif-banner-img"
+              style="animation: subtle-glow 3s ease-in-out infinite alternate;">
+
         <!-- Jackpot Overlay -->
         <div class="absolute inset-0 flex items-center justify-end pr-6">
                <div class="flex items-center space-x-2">
@@ -946,6 +946,18 @@
         .sticky-announcement {
             top: 64px; /* Header height remains same on mobile */
         }
+    }
+
+    /* Desktop layout refinements */
+    @media (min-width: 1024px) {
+        .max-w-7xl, .max-w-6xl { margin-left: auto; margin-right: auto; }
+        .gif-banner-img { border-radius: 12px; }
+        .cyber-game-card { will-change: transform; }
+        .cyber-game-card:hover .cyber-game-container { transform: translateY(-6px); }
+        .cyber-game-container { border-radius: 14px; }
+        .cyber-view-all-btn { border-width: 1.5px; }
+        .cyber-stat-container { border-width: 1.5px; border-radius: 14px; }
+        .sticky-announcement { border-radius: 0 0 12px 12px; }
     }
 </style>
 @endverbatim
