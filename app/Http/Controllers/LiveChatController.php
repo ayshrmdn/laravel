@@ -104,15 +104,7 @@ class LiveChatController extends Controller
             'last_message_at' => now(),
         ]);
 
-        Message::create([
-            'chat_id' => $chat->id,
-            'sender_type' => 'guest',
-            'sender_id' => $user->id,
-            'message' => 'Memulai chat sebagai pengguna terautentikasi',
-            'type' => 'text',
-            'is_read' => false,
-        ]);
-
+        // Do not create initial user message. Auto-greeting will be sent after the first user message.
         return response()->json(['success' => true, 'chat_id' => $chat->id]);
     }
 
@@ -134,7 +126,7 @@ class LiveChatController extends Controller
                 'chat_id' => $chat->id,
                 'sender_type' => 'guest',
                 'sender_id' => null,
-                'message' => $request->message,
+                'message' => $request->message, // user message
                 'type' => 'text',
                 'is_read' => false
             ]);
@@ -143,6 +135,20 @@ class LiveChatController extends Controller
                 'last_message_at' => now(),
                 'status' => 'active'
             ]);
+
+            // Auto-greet on first user message if chat has only 1 message
+            if (Message::where('chat_id', $chat->id)->count() === 1) {
+                $greetText = 'Selamat datang ' . ($chat->guest_name ?: 'pengguna') . ', ada yang bisa dibantu?';
+                Message::create([
+                    'chat_id' => $chat->id,
+                    'sender_type' => 'admin',
+                    'sender_id' => null,
+                    'message' => $greetText,
+                    'type' => 'text',
+                    'is_read' => false
+                ]);
+                $chat->update(['last_message_at' => now()]);
+            }
 
             return response()->json([
                 'success' => true,
