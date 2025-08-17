@@ -161,6 +161,7 @@ class LiveChatController extends Controller
                     'sender_name' => $chat->guest_name ?? 'Tamu',
                     'timestamp' => $message->created_at->toISOString(),
                     'created_at' => $message->created_at,
+                    'time_hm' => $message->created_at->format('H:i'),
                 ]
             ]);
 
@@ -195,6 +196,7 @@ class LiveChatController extends Controller
                             : ($chat->guest_name ?? 'Tamu'),
                         'timestamp' => $message->created_at->toISOString(),
                         'created_at' => $message->created_at,
+                        'time_hm' => $message->created_at->format('H:i'),
                     ];
                 });
 

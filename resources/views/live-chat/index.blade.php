@@ -1166,7 +1166,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     message.sender_name,
                     true,
                     message.id,
-                    message.timestamp || message.created_at || null
+                    message.timestamp || message.created_at || null,
+                    message.time_hm || null
                 );
                 lastMessageIds.add(message.id);
                 shouldScroll = true;
@@ -1185,7 +1186,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Add message to chat
-    function addMessageToChat(message, senderType, senderName, animate = true, messageId = null, createdAtIso = null) {
+    function addMessageToChat(message, senderType, senderName, animate = true, messageId = null, createdAtIso = null, timeHM = null) {
         const messageElement = document.createElement('div');
         messageElement.className = `message-bubble ${senderType}`;
         
@@ -1199,13 +1200,17 @@ document.addEventListener('DOMContentLoaded', function() {
             messageElement.style.transform = 'translateY(20px)';
         }
         
-        // Use server timestamp if provided, fallback to now
+        // Use pre-formatted time (H:i) if available; otherwise format from createdAtIso
         let localTime = '';
-        try {
-            const dateObj = createdAtIso ? new Date(createdAtIso) : new Date();
-            localTime = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
-        } catch (_) {
-            localTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+        if (timeHM) {
+            localTime = timeHM;
+        } else {
+            try {
+                const dateObj = createdAtIso ? new Date(createdAtIso) : new Date();
+                localTime = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+            } catch (_) {
+                localTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+            }
         }
         
         messageElement.innerHTML = `
