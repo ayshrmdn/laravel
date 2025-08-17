@@ -17,7 +17,7 @@
                         </div>
                         <div>
                             <h2 class="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400">{{ now()->diffInHours($user->created_at) < 48 ? 'Selamat Datang, ' . ($user->full_name ?? $user->username) : 'Welcome Back, ' . ($user->full_name ?? $user->username) }}</h2>
-                            <p class="text-sm text-gray-300 mt-1">User ID: <span class="font-mono text-cyan-300">#{{ $user->id }}</span></p>
+                            
                         </div>
                     </div>
                     <div class="mt-4 text-gray-300 text-sm">Senang melihatmu di sini. Semoga harimu menyenangkan dan jackpot besar menantimu!</div>
