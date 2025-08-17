@@ -490,12 +490,12 @@
                             </div>
                         @else
                             <div class="flex items-center space-x-2">
-                                <a href="#" class="cyber-auth-btn btn-register">
-                                    <span class="relative z-10">Deposit</span>
-                                </a>
-                                <a href="#" class="cyber-auth-btn btn-login">
-                                    <span class="relative z-10">Withdraw</span>
-                                </a>
+                                <button onclick="openRegisterModal()" class="cyber-auth-btn btn-register">
+                                    <span class="relative z-10">Daftar</span>
+                                </button>
+                                <button onclick="openLoginModal()" class="cyber-auth-btn btn-login">
+                                    <span class="relative z-10">Masuk</span>
+                                </button>
                             </div>
                         @endauth
                     </div>
