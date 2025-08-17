@@ -56,6 +56,17 @@ class LiveChatController extends Controller
                 'is_read' => false
             ]);
 
+            // Auto-greeting for guest after starting chat
+            Message::create([
+                'chat_id' => $chat->id,
+                'sender_type' => 'admin',
+                'sender_id' => null,
+                'message' => 'Selamat datang ' . $request->guest_name . ', ada yang bisa dibantu?',
+                'type' => 'text',
+                'is_read' => false
+            ]);
+            $chat->update(['last_message_at' => now()]);
+
             Session::put('guest_chat_session', [
                 'chat_id' => $chat->id,
                 'name' => $request->guest_name,
