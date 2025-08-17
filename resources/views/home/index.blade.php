@@ -960,10 +960,10 @@
         .sticky-announcement { border-radius: 0 0 12px 12px; }
     }
 
-    /* Desktop: smaller jackpot banner and aligned digits */
+    /* Desktop: centered, narrower jackpot banner and aligned digits */
     @media (min-width: 1024px) {
-        .jackpot-frame { max-height: 140px; }
-        .gif-banner-img { max-height: 140px; object-position: center right; }
+        .jackpot-frame { max-width: 1100px; margin-left: auto; margin-right: auto; }
+        .gif-banner-img { object-position: center; }
         .jackpot-overlay { padding-right: 3rem; }
         .jackpot-currency { font-size: 1rem; }
         #jackpot-amount { font-size: 1.4rem; letter-spacing: .08em; }
